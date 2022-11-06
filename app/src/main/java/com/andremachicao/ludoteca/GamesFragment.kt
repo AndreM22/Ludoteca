@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentGamesBinding
 
 class GamesFragment: Fragment() {
@@ -20,6 +21,9 @@ class GamesFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.btAddGame.setOnClickListener {
+            val goToAddGamePage = GamesFragmentDirections.actionGamesFragmentToAddGameFragment()
+            findNavController().navigate(goToAddGamePage)
+        }
     }
 }

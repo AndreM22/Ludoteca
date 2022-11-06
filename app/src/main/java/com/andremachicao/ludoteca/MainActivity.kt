@@ -7,9 +7,15 @@ import com.andremachicao.ludoteca.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
 
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+    /*
+    override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -34,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment){
         val fragManager = supportFragmentManager
         val fragmentTransaction = fragManager.beginTransaction()
-        fragmentTransaction.replace(R.id.MainScreenFrameLayout,fragment)
+        fragmentTransaction.replace(R.id.containerMainApp,fragment)
         fragmentTransaction.commit()
     }
+   */
+
 }
