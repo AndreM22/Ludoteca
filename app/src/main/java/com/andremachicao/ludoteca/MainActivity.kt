@@ -13,13 +13,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(JuegosFragment())
+        replaceFragment(GamesFragment())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when(it.itemId){
 
-                R.id.juegos -> replaceFragment(JuegosFragment())
+                R.id.juegos -> replaceFragment(GamesFragment())
                 R.id.chat -> replaceFragment(ChatFragment())
                 R.id.contacto -> replaceFragment(ContactFragment())
 
