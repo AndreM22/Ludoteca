@@ -18,5 +18,9 @@
         android:id="@+id/addGameFragment"
         android:name="com.andremachicao.ludoteca.AddGameFragment"
         android:label="AddGameFragment"
-        tools:layout="@layout/fragment_add_game"/>
+        tools:layout="@layout/fragment_add_game">
+        <action
+            android:id="@+id/action_addGameFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
 </navigation>

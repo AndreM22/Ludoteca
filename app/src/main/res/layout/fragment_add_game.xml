@@ -13,7 +13,7 @@
         android:background="@color/light_red">
 
         <EditText
-            android:id="@+id/edtxModeloAirplane"
+            android:id="@+id/edtxNameGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="105dp"
@@ -26,43 +26,43 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edtxFabricanteAirplane"
+            android:id="@+id/edtxStateGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Estado"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxModeloAirplane" />
+            app:layout_constraintTop_toBottomOf="@id/edtxNameGame" />
 
         <EditText
-            android:id="@+id/edtxModernidadAirplane"
+            android:id="@+id/edtxLanguageInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Lenguage"
-            android:inputType="number"
+            android:inputType="text"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxFabricanteAirplane" />
+            app:layout_constraintTop_toBottomOf="@id/edtxStateGame" />
 
         <EditText
-        android:id="@+id/edtxDescripcionAirplane"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="Descripción"
-        android:inputType="textCapSentences|textMultiLine"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtxImagenAeronave" />
+            android:id="@+id/edtxDescriptionGame"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Descripción"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxGameImage" />
 
         <EditText
             android:id="@+id/edtxPlayersInput"
@@ -72,10 +72,11 @@
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Numero Jugadores"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="number"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxDescripcionAirplane" />
+            app:layout_constraintTop_toBottomOf="@id/edtxDescriptionGame" />
+
         <EditText
             android:id="@+id/edtxTimeInput"
             android:layout_width="wrap_content"
@@ -84,10 +85,10 @@
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Fecha de creacion"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="date"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxPlayersInput"/>
+            app:layout_constraintTop_toBottomOf="@id/edtxPlayersInput" />
 
         <EditText
             android:id="@+id/edtxPriceInput"
@@ -97,7 +98,7 @@
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Precio"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="numberDecimal"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxTimeInput" />
@@ -110,50 +111,42 @@
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Ubiacion"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="text"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPriceInput" />
 
         <EditText
-            android:id="@+id/edtxImagenAeronave"
+            android:id="@+id/edtxGameImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Imagen"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:minHeight="48dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxModernidadAirplane" />
+            app:layout_constraintTop_toBottomOf="@id/edtxLanguageInput" />
 
 
-        <ImageView
-            android:id="@+id/imgAcceptButtonAddAircraft"
+        <Button
+            android:id="@+id/btAddGameAccept"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="80dp"
             android:layout_marginTop="150dp"
             android:layout_marginEnd="80dp"
             android:layout_marginBottom="30dp"
+            android:text="Añadir"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtxLocationInput"
             app:srcCompat="@drawable/button_background_2" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Añadir"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgAcceptButtonAddAircraft"
-            app:layout_constraintEnd_toEndOf="@+id/imgAcceptButtonAddAircraft"
-            app:layout_constraintStart_toStartOf="@+id/imgAcceptButtonAddAircraft"
-            app:layout_constraintTop_toTopOf="@+id/imgAcceptButtonAddAircraft" />
+
 
 
 
