@@ -31,15 +31,15 @@ class AddGameFragment: Fragment(){
             var id = UUID.randomUUID().toString()
             try{
                 var game = Game(
-                    Name = binding.edtxNameGame.text.toString(),
-                    State = binding.edtxStateGame.text.toString().toDouble(),
-                    Language = binding.edtxLanguageInput.text.toString(),
-                    Description = binding.edtxDescriptionGame.text.toString(),
-                    Players = binding.edtxPlayersInput.text.toString().toInt(),
-                    Time = binding.edtxTimeInput.text.toString(),
-                    Price = binding.edtxPriceInput.text.toString().toDouble(),
-                    Location = binding.edtxLocationInput.text.toString(),
-                    Image = binding.edtxGameImage.text.toString() )
+                    name = binding.edtxNameGame.text.toString(),
+                    state = binding.edtxStateGame.text.toString().toDouble(),
+                    language = binding.edtxLanguageInput.text.toString(),
+                    description = binding.edtxDescriptionGame.text.toString(),
+                    players = binding.edtxPlayersInput.text.toString().toInt(),
+                    time = binding.edtxTimeInput.text.toString(),
+                    price = binding.edtxPriceInput.text.toString().toDouble(),
+                    location = binding.edtxLocationInput.text.toString(),
+                    image = binding.edtxGameImage.text.toString() )
 
                 db.collection("Games").document(id).set(game)
                     .addOnSuccessListener { documentReference ->

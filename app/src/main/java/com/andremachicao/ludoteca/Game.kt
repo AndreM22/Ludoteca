@@ -2,12 +2,12 @@ package com.andremachicao.ludoteca
 
 import java.io.Serializable
 
-data class Game ( val Name: String,
-                  val State: Double,
-                  val Language: String,
-                  val Description:String,
-                  val Players:Int,
-                  val Time: String,
-                  val Price: Double,
-                  val Location:String,
-                  val Image:String)
+data class Game(val name: String,
+                val state: Double,
+                val language: String,
+                val description:String,
+                val players: Int,
+                val time: String,
+                val price: Double,
+                val location:String,
+                val image:String)
