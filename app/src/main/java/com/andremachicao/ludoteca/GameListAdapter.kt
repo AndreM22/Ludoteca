@@ -1,12 +1,15 @@
 package com.andremachicao.ludoteca
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.andremachicao.ludoteca.databinding.GameItemBinding
 
-class GameListAdapter:RecyclerView.Adapter<ListOfGamesViewHolder>() {
+class GameListAdapter():RecyclerView.Adapter<ListOfGamesViewHolder>() {
     private val gameList: MutableList<Game> = mutableListOf()
     private var onGameItemClickListener:((game: Game)-> Unit)? = null
 
@@ -24,8 +27,10 @@ class GameListAdapter:RecyclerView.Adapter<ListOfGamesViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ListOfGamesViewHolder, position: Int) {
+        Log.d(ContentValues.TAG, "Entro el holder")
         holder.bind(gameList[position])
         holder.binding.root.setOnClickListener{
+            Log.d(ContentValues.TAG, "Se presiono el juego ${gameList[position].name}")
             onGameItemClickListener?.invoke(gameList[position])
         }
     }

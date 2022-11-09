@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -17,7 +19,10 @@ import com.google.firebase.ktx.Firebase
 class GamesFragment: Fragment() {
     private lateinit var binding: FragmentGamesBinding
     private val listOfGamesAdapter = GameListAdapter()
+    //private lateinit var listOfGamesAdapter:GameListAdapter
     private val db = Firebase.firestore
+    //val  games: MutableList<Game> = mutableListOf()
+    //val  games: MutableList<Game> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +34,23 @@ class GamesFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.rvGameList.adapter =listOfGamesAdapter
+        //binding.rvGameList.adapter =listOfGamesAdapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         binding.rvGameList.layoutManager=layoutManager
         LinearSnapHelper().attachToRecyclerView(binding.rvGameList)
         showData()
+        //listOfGamesAdapter.addAll(games)
+        //listOfGamesAdapter.addAll(games)
+        binding.rvGameList.adapter =listOfGamesAdapter
+
         binding.btAddGame.setOnClickListener {
             val goToAddGamePage = GamesFragmentDirections.actionGamesFragmentToAddGameFragment()
             findNavController().navigate(goToAddGamePage)
+        }
+        listOfGamesAdapter.setOnGameClickListener {
+            Toast.makeText(context,"Se toca el juego ${it.name}",Toast.LENGTH_SHORT).show()
+            val goToShowDetails = GamesFragmentDirections.actionGamesFragmentToGameDetailsFragment(it)
+            findNavController().navigate(goToShowDetails)
         }
 
     }
