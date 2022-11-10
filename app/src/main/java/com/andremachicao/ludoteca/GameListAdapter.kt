@@ -5,19 +5,26 @@ import android.content.ContentValues
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.andremachicao.ludoteca.databinding.GameItemBinding
 
-class GameListAdapter():RecyclerView.Adapter<ListOfGamesViewHolder>() {
-    private val gameList: MutableList<Game> = mutableListOf()
+class GameListAdapter( ):RecyclerView.Adapter<ListOfGamesViewHolder>() {
+    private var gameList = mutableListOf<Game>()
     private var onGameItemClickListener:((game: Game)-> Unit)? = null
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun addAll(newElementList:List<Game>){
         gameList.clear()
         gameList.addAll(newElementList)
         notifyDataSetChanged()
+    }
+
+
+
+    fun setListData(data: MutableList<Game>){
+        gameList=data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListOfGamesViewHolder {
