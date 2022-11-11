@@ -150,7 +150,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="TextView"
+            android:text="@{String.valueOf(gameInfo.players)}"
+            tools:text="16"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/labelPlayersDetails"
             app:layout_constraintTop_toBottomOf="@+id/imgGameDetails" />
@@ -161,7 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="TextView"
+            android:text="@{gameInfo.language}"
+            tools:text="Espaniol"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/languageLabelDetails"
             app:layout_constraintTop_toBottomOf="@+id/playersDataDetails" />
@@ -172,7 +174,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="TextView"
+            android:text="@{gameInfo.time}"
+            tools:text="20/11/2022"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/timeLabelDetails"
             app:layout_constraintTop_toBottomOf="@+id/languageDataDetails" />
@@ -183,7 +186,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="TextView"
+            android:text="@{gameInfo.location}"
+            tools:text="La Paz"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/locationLabelDetails"
             app:layout_constraintTop_toBottomOf="@+id/timeDataDetails" />

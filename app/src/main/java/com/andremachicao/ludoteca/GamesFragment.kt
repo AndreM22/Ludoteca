@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.andremachicao.ludoteca.databinding.FragmentGamesBinding
@@ -21,10 +23,7 @@ import com.google.firebase.ktx.Firebase
 class GamesFragment: Fragment() {
     private lateinit var binding: FragmentGamesBinding
     private val listOfGamesAdapter = GameListAdapter()
-    private val db = Firebase.firestore
-    private val  games: MutableList<Game> = mutableListOf()
     private val viewModel by lazy { ViewModelProviders.of(this)[MainViewModel::class.java] }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,20 +34,24 @@ class GamesFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.rvGameList.adapter = listOfGamesAdapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         binding.rvGameList.layoutManager = layoutManager
-        binding.rvGameList.adapter = listOfGamesAdapter
-        LinearSnapHelper().attachToRecyclerView(binding.rvGameList)
-        viewModel.fetchGamesData().observe(viewLifecycleOwner, Observer {
+        val decorationItem = DividerItemDecoration(context, layoutManager.orientation)
+        binding.rvGameList.addItemDecoration(decorationItem)
+        //LinearSnapHelper().attachToRecyclerView(binding.rvGameList)
+        viewModel.fetchGamesData().observe(viewLifecycleOwner, {
             listOfGamesAdapter.addAll(it)
-            //listOfGamesAdapter.setListData(it)
-            //listOfGamesAdapter.notifyDataSetChanged()
+            Toast.makeText(context,"${listOfGamesAdapter.itemCount}",Toast.LENGTH_SHORT).show()
         })
+
         listOfGamesAdapter.setOnGameClickListener {
             Toast.makeText(context,"Se toca el juego ${it.name}",Toast.LENGTH_SHORT).show()
             val goToShowDetails = GamesFragmentDirections.actionGamesFragmentToGameDetailsFragment(it)
             findNavController().navigate(goToShowDetails)
         }
+
+
 
         binding.btAddGame.setOnClickListener {
             val goToAddGamePage = GamesFragmentDirections.actionGamesFragmentToAddGameFragment()

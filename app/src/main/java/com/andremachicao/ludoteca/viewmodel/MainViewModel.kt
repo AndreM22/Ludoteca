@@ -12,8 +12,8 @@ class MainViewModel: ViewModel() {
     val repo = Repo()
     fun fetchGamesData():LiveData<MutableList<Game>>{
         val mutableData = MutableLiveData<MutableList<Game>>()
-        repo.getAllGames().observeForever {
-            mutableData.value = it
+        repo.getAllGames().observeForever { gamesList ->
+            mutableData.value = gamesList
         }
 
         return mutableData

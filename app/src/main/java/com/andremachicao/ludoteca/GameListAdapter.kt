@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andremachicao.ludoteca.databinding.GameItemBinding
 
-class GameListAdapter( ):RecyclerView.Adapter<ListOfGamesViewHolder>() {
-    private var gameList = mutableListOf<Game>()
+class GameListAdapter:RecyclerView.Adapter<ListOfGamesViewHolder>() {
+    private val gameList: MutableList<Game> = mutableListOf()
     private var onGameItemClickListener:((game: Game)-> Unit)? = null
-
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -21,12 +20,6 @@ class GameListAdapter( ):RecyclerView.Adapter<ListOfGamesViewHolder>() {
         notifyDataSetChanged()
     }
 
-
-
-    fun setListData(data: MutableList<Game>){
-        gameList=data
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListOfGamesViewHolder {
         val binding = GameItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ListOfGamesViewHolder(binding)
@@ -34,12 +27,15 @@ class GameListAdapter( ):RecyclerView.Adapter<ListOfGamesViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ListOfGamesViewHolder, position: Int) {
-        Log.d(ContentValues.TAG, "Entro el holder")
+        Log.d(ContentValues.TAG, "Entro el holder ,position: $position")
+        Log.d(ContentValues.TAG, "size : $itemCount")
         holder.bind(gameList[position])
-        holder.binding.root.setOnClickListener{
+        holder.binding.root.setOnClickListener {
             Log.d(ContentValues.TAG, "Se presiono el juego ${gameList[position].name}")
             onGameItemClickListener?.invoke(gameList[position])
         }
+
+
     }
 
     override fun getItemCount(): Int {
