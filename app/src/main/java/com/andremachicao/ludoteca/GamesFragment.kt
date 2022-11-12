@@ -42,11 +42,11 @@ class GamesFragment: Fragment() {
         //LinearSnapHelper().attachToRecyclerView(binding.rvGameList)
         viewModel.fetchGamesData().observe(viewLifecycleOwner, {
             listOfGamesAdapter.addAll(it)
-            Toast.makeText(context,"${listOfGamesAdapter.itemCount}",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context,"${listOfGamesAdapter.itemCount}",Toast.LENGTH_SHORT).show()
         })
 
         listOfGamesAdapter.setOnGameClickListener {
-            Toast.makeText(context,"Se toca el juego ${it.name}",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context,"Se toca el juego ${it.name}",Toast.LENGTH_SHORT).show()
             val goToShowDetails = GamesFragmentDirections.actionGamesFragmentToGameDetailsFragment(it)
             findNavController().navigate(goToShowDetails)
         }

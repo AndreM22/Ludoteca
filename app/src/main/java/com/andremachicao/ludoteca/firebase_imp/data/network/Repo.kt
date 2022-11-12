@@ -1,8 +1,11 @@
 package com.andremachicao.ludoteca.firebase_imp.data.network
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andremachicao.ludoteca.Game
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -13,7 +16,10 @@ class Repo {
         db.collection("Games").get().addOnSuccessListener {result ->
             val listData = mutableListOf<Game>()
             for (document in result){
-                val game = Game(name = document.data["name"] as String,
+                Log.d(TAG, "El id es: ${document.data["id"]}")
+                val game = Game(
+                    id = document.data["id"] as String,
+                    name = document.data["name"] as String,
                     state = document.data["state"] as Double,
                     language = document.data["language"] as String,
                     description = document.data["description"] as String,
@@ -28,5 +34,9 @@ class Repo {
         }
         return mutableData
 
+    }
+
+    fun deleteGame(id:String){
+        db.collection("Games").document(id).delete()
     }
 }

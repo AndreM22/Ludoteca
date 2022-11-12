@@ -8,7 +8,6 @@ import com.andremachicao.ludoteca.firebase_imp.data.network.Repo
 
 class MainViewModel: ViewModel() {
 
-    val games = MutableLiveData<List<Game>>(listOf())
     val repo = Repo()
     fun fetchGamesData():LiveData<MutableList<Game>>{
         val mutableData = MutableLiveData<MutableList<Game>>()
@@ -18,7 +17,10 @@ class MainViewModel: ViewModel() {
 
         return mutableData
 
+    }
 
+    fun deleteGame(id:String){
+        repo.deleteGame(id)
     }
 
 }

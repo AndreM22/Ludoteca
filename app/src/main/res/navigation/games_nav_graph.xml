@@ -34,5 +34,23 @@
         <argument
             android:name="gameInfo"
             app:argType="com.andremachicao.ludoteca.Game" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gameUpdateFragment"
+            app:destination="@id/gameUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameUpdateFragment"
+        android:name="com.andremachicao.ludoteca.GameUpdateFragment"
+        android:label="GameUpdateFragment"
+        tools:layout="@layout/fragment_game_update">
+        <argument
+            android:name="gameInfo"
+            app:argType="com.andremachicao.ludoteca.Game" />
+        <action
+            android:id="@+id/action_gameUpdateFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
     </fragment>
 </navigation>

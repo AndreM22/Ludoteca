@@ -31,6 +31,7 @@ class AddGameFragment: Fragment(){
             var id = UUID.randomUUID().toString()
             try{
                 var game = Game(
+                    id = id,
                     name = binding.edtxNameGame.text.toString(),
                     state = binding.edtxStateGame.text.toString().toDouble(),
                     language = binding.edtxLanguageInput.text.toString(),

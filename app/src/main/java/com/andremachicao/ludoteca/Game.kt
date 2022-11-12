@@ -2,7 +2,8 @@ package com.andremachicao.ludoteca
 
 import java.io.Serializable
 
-data class Game(val name: String,
+data class Game(val id: String,
+                val name: String,
                 val state: Double,
                 val language: String,
                 val description:String,

@@ -1,0 +1,179 @@
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_red">
+
+        <EditText
+            android:id="@+id/edtxNameGameUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edtxStateGameUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Estado"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxNameGameUpdate" />
+
+        <EditText
+            android:id="@+id/edtxLanguageInputUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Lenguage"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxStateGameUpdate" />
+
+        <EditText
+            android:id="@+id/edtxDescriptionGameUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Descripción"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxGameImageUpdate" />
+
+        <EditText
+            android:id="@+id/edtxPlayersInputUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Numero Jugadores"
+            android:inputType="number"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxDescriptionGameUpdate" />
+
+        <EditText
+            android:id="@+id/edtxTimeInputUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Fecha de creacion"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxPlayersInputUpdate" />
+
+        <EditText
+            android:id="@+id/edtxPriceInputUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Precio"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxTimeInputUpdate" />
+
+        <EditText
+            android:id="@+id/edtxLocationInputUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Ubiacion"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxPriceInputUpdate" />
+
+        <EditText
+            android:id="@+id/edtxGameImageUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:hint="Imagen"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtxLanguageInputUpdate" />
+
+
+        <Button
+            android:id="@+id/btAcceptUpdate"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginBottom="30dp"
+            android:text="Actualizar"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxLocationInputUpdate"
+            app:srcCompat="@drawable/button_background_2" />
+
+
+
+
+
+        <ImageView
+            android:id="@+id/imgEPAUpdate"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgEPA8Update"
+            app:srcCompat="@drawable/ic_descricion" />
+
+        <ImageView
+            android:id="@+id/imgEPA8Update"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="265dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_imagen" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
