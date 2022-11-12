@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="com.andremachicao.ludoteca.GamesFragment"
+        android:name="com.andremachicao.ludoteca.game.GamesFragment"
         android:label="GamesFragment"
         tools:layout="@layout/fragment_games">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addGameFragment"
-        android:name="com.andremachicao.ludoteca.AddGameFragment"
+        android:name="com.andremachicao.ludoteca.game.AddGameFragment"
         android:label="AddGameFragment"
         tools:layout="@layout/fragment_add_game">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameDetailsFragment"
-        android:name="com.andremachicao.ludoteca.GameDetailsFragment"
+        android:name="com.andremachicao.ludoteca.game.GameDetailsFragment"
         android:label="GameDetailsFragment"
         tools:layout="@layout/fragment_game_details">
         <argument
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameUpdateFragment"
-        android:name="com.andremachicao.ludoteca.GameUpdateFragment"
+        android:name="com.andremachicao.ludoteca.game.GameUpdateFragment"
         android:label="GameUpdateFragment"
         tools:layout="@layout/fragment_game_update">
         <argument

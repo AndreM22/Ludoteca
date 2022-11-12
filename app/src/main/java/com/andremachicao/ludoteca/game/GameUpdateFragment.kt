@@ -1,4 +1,4 @@
-package com.andremachicao.ludoteca
+package com.andremachicao.ludoteca.game
 
 import android.content.ContentValues
 import android.os.Bundle

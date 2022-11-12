@@ -1,4 +1,4 @@
-package com.andremachicao.ludoteca
+package com.andremachicao.ludoteca.game
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentAddGameBinding
+import com.andremachicao.ludoteca.game.model.Game
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*

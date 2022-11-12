@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andremachicao.ludoteca.databinding.GameItemBinding
+import com.andremachicao.ludoteca.game.model.Game
 
 class GameListAdapter:RecyclerView.Adapter<ListOfGamesViewHolder>() {
     private val gameList: MutableList<Game> = mutableListOf()

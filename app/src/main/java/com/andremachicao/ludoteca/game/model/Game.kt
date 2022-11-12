@@ -1,4 +1,4 @@
-package com.andremachicao.ludoteca
+package com.andremachicao.ludoteca.game.model
 
 import java.io.Serializable
 

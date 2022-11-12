@@ -3,7 +3,7 @@ package com.andremachicao.ludoteca.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andremachicao.ludoteca.Game
+import com.andremachicao.ludoteca.game.model.Game
 import com.andremachicao.ludoteca.firebase_imp.data.network.Repo
 
 class MainViewModel: ViewModel() {

@@ -1,4 +1,4 @@
-package com.andremachicao.ludoteca
+package com.andremachicao.ludoteca.game
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -4,8 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andremachicao.ludoteca.Game
-import com.google.android.material.tabs.TabLayout
+import com.andremachicao.ludoteca.game.model.Game
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
