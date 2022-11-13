@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/games_nav_graph"
+    app:startDestination="@id/gamesFragment">
+
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="com.andremachicao.ludoteca.game.GamesFragment"
+        android:label="GamesFragment"
+        tools:layout="@layout/fragment_games">
+        <action
+            android:id="@+id/action_gamesFragment_to_addGameFragment"
+            app:destination="@id/addGameFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_gameDetailsFragment"
+            app:destination="@id/gameDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGameFragment"
+        android:name="com.andremachicao.ludoteca.game.AddGameFragment"
+        android:label="AddGameFragment"
+        tools:layout="@layout/fragment_add_game">
+        <action
+            android:id="@+id/action_addGameFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailsFragment"
+        android:name="com.andremachicao.ludoteca.game.GameDetailsFragment"
+        android:label="GameDetailsFragment"
+        tools:layout="@layout/fragment_game_details">
+        <argument
+            android:name="gameInfo"
+            app:argType="com.andremachicao.ludoteca.Game" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_gameDetailsFragment_to_gameUpdateFragment"
+            app:destination="@id/gameUpdateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameUpdateFragment"
+        android:name="com.andremachicao.ludoteca.game.GameUpdateFragment"
+        android:label="GameUpdateFragment"
+        tools:layout="@layout/fragment_game_update">
+        <argument
+            android:name="gameInfo"
+            app:argType="com.andremachicao.ludoteca.Game" />
+        <action
+            android:id="@+id/action_gameUpdateFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+</navigation>

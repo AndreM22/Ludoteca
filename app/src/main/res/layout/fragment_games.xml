@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_red">
+
+    <ImageView
+        android:id="@+id/btSearchGame"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/button_background" />
+
+    <ImageView
+        android:id="@+id/icon_search2"
+        android:layout_width="44dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btSearchGame"
+        app:layout_constraintStart_toStartOf="@+id/btSearchGame"
+        app:layout_constraintTop_toTopOf="@+id/btSearchGame"
+        app:srcCompat="@drawable/ic_search" />
+
+    <EditText
+        android:id="@+id/txTextSearchGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:hint="Buscar"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btSearchGame"
+        app:layout_constraintStart_toEndOf="@+id/icon_search2"
+        app:layout_constraintTop_toTopOf="@+id/btSearchGame" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSearchSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeftGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRightGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGameList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineFinalGame"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRightGame"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeftGame"
+        app:layout_constraintTop_toTopOf="@+id/guidelineSearchSection"
+        tools:listitem="@layout/game_item" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFinalGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <Button
+        android:id="@+id/btAddGame"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:text="Añadir Juego"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRightGame"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeftGame"
+        app:layout_constraintTop_toBottomOf="@+id/rvGameList"
+        app:srcCompat="@drawable/button_background_2" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

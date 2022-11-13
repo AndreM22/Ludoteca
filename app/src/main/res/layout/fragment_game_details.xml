@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="gameInfo"
+            type="com.andremachicao.ludoteca.game.model.Game" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_red">
+
+
+        <ImageView
+            android:id="@+id/infoGameContainer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/button_background" />
+
+        <ImageView
+            android:id="@+id/imgGameDetails"
+            srcUrl2="@{gameInfo.image}"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toTopOf="@+id/infoGameContainer"
+            tools:srcCompat="@drawable/activities" />
+
+        <TextView
+            android:id="@+id/gameNameDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            android:text="@{gameInfo.name}"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/imgGameDetails"
+            app:layout_constraintTop_toTopOf="@+id/infoGameContainer"
+            tools:text="Catán" />
+
+        <TextView
+            android:id="@+id/stateInfoDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
+            android:text="@{String.valueOf(gameInfo.state)}"
+            tools:text="Catan"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/imgGameDetails"
+            app:layout_constraintTop_toBottomOf="@+id/gameNameDetails" />
+
+        <TextView
+            android:id="@+id/stateTen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="/10"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/stateInfoDetails"
+            app:layout_constraintTop_toBottomOf="@+id/gameNameDetails" />
+
+        <TextView
+            android:id="@+id/gamePriceDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:text="@{String.valueOf(gameInfo.price)}"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/stateTen"
+            app:layout_constraintTop_toBottomOf="@+id/gameNameDetails"
+            tools:text="7777.77" />
+
+        <TextView
+            android:id="@+id/bolivianosInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="20dp"
+            android:text="Bs."
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/gamePriceDetails"
+            app:layout_constraintTop_toBottomOf="@+id/gameNameDetails" />
+
+        <TextView
+            android:id="@+id/labelPlayersDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="30dp"
+            android:text="# Players :"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/imgGameDetails" />
+
+        <TextView
+            android:id="@+id/languageLabelDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="30dp"
+            android:text="Lenguaje :"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/labelPlayersDetails" />
+
+        <TextView
+            android:id="@+id/timeLabelDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="30dp"
+            android:text="Fabricación :"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/languageLabelDetails" />
+        <TextView
+            android:id="@+id/locationLabelDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="30dp"
+            android:text="Locación :"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/timeLabelDetails" />
+
+
+        <TextView
+            android:id="@+id/playersDataDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@{String.valueOf(gameInfo.players)}"
+            tools:text="16"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/labelPlayersDetails"
+            app:layout_constraintTop_toBottomOf="@+id/imgGameDetails" />
+
+        <TextView
+            android:id="@+id/languageDataDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@{gameInfo.language}"
+            tools:text="Espaniol"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/languageLabelDetails"
+            app:layout_constraintTop_toBottomOf="@+id/playersDataDetails" />
+
+        <TextView
+            android:id="@+id/timeDataDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@{gameInfo.time}"
+            tools:text="20/11/2022"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/timeLabelDetails"
+            app:layout_constraintTop_toBottomOf="@+id/languageDataDetails" />
+
+        <TextView
+            android:id="@+id/locationDataDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="@{gameInfo.location}"
+            tools:text="La Paz"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/locationLabelDetails"
+            app:layout_constraintTop_toBottomOf="@+id/timeDataDetails" />
+
+
+        <ScrollView
+            android:id="@+id/descriptionDataContainerDetails"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@id/locationLabelDetails" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{gameInfo.description}"
+                android:textSize="16sp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Eget magna fermentum iaculis eu non diam. Fermentum posuere urna nec tincidunt praesent semper feugiat. Nisi vitae suscipit tellus mauris a diam maecenas. Cursus euismod quis viverra nibh cras. Tincidunt vitae semper quis lectus nulla. Fermentum dui faucibus in ornare quam viverra. Non arcu risus quis varius quam quisque id diam vel. Aliquam eleifend mi in nulla posuere. Ultricies lacus sed turpis tincidunt id. Malesuada fames ac turpis egestas. Tellus integer feugiat scelerisque varius morbi enim nunc. Pretium fusce id velit ut."/>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btUpdateGame"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:text="Actualizar Información"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionDataContainerDetails"
+            app:srcCompat="@drawable/button_background_2" />
+
+        <Button
+            android:id="@+id/buttonDeleteGame"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:text="Eliminar Juego"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+            app:layout_constraintTop_toBottomOf="@+id/btUpdateGame"
+            app:srcCompat="@drawable/button_background_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
