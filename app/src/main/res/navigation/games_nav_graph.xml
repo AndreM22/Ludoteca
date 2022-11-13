@@ -31,26 +31,26 @@
         android:name="com.andremachicao.ludoteca.game.GameDetailsFragment"
         android:label="GameDetailsFragment"
         tools:layout="@layout/fragment_game_details">
-        <argument
-            android:name="gameInfo"
-            app:argType="com.andremachicao.ludoteca.Game" />
         <action
             android:id="@+id/action_gameDetailsFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
         <action
             android:id="@+id/action_gameDetailsFragment_to_gameUpdateFragment"
             app:destination="@id/gameUpdateFragment" />
+        <argument
+            android:name="gameInfo"
+            app:argType="com.andremachicao.ludoteca.game.model.Game" />
     </fragment>
     <fragment
         android:id="@+id/gameUpdateFragment"
         android:name="com.andremachicao.ludoteca.game.GameUpdateFragment"
         android:label="GameUpdateFragment"
         tools:layout="@layout/fragment_game_update">
-        <argument
-            android:name="gameInfo"
-            app:argType="com.andremachicao.ludoteca.Game" />
         <action
             android:id="@+id/action_gameUpdateFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+        <argument
+            android:name="gameInfo"
+            app:argType="com.andremachicao.ludoteca.game.model.Game" />
     </fragment>
 </navigation>
