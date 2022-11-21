@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true">
@@ -14,80 +15,85 @@
 
         <EditText
             android:id="@+id/edtxNameGame"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Nombre"
+            android:drawableStart="@drawable/ic_game_name"
+            android:drawablePadding="10dp"
             android:inputType="textPersonName"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/edtxStateGame"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinnerState"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Estado"
-            android:inputType="numberDecimal"
+            android:dropDownWidth="match_parent"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxNameGame" />
+            app:layout_constraintTop_toBottomOf="@+id/edtxNameGame"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <EditText
             android:id="@+id/edtxLanguageInput"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
+            android:drawableStart="@drawable/ic_language_game"
+            android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="Lenguage"
+            android:hint="Idioma"
             android:inputType="text"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxStateGame" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerState" />
 
         <EditText
             android:id="@+id/edtxDescriptionGame"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="250dp"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Descripción"
             android:inputType="textMultiLine|textCapSentences"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxGameImage" />
 
         <EditText
             android:id="@+id/edtxPlayersInput"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Numero Jugadores"
             android:inputType="number"
-            android:minHeight="48dp"
+            android:minHeight="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxDescriptionGame" />
 
-        <EditText
+        <TextView
             android:id="@+id/edtxTimeInput"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="28dp"
             android:ems="10"
-            android:hint="Fecha de creacion"
-            android:inputType="date"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:hint="Fecha de fabricación"
+            android:minHeight="60dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btDate"
             app:layout_constraintTop_toBottomOf="@id/edtxPlayersInput" />
 
         <EditText
@@ -118,14 +124,16 @@
 
         <EditText
             android:id="@+id/edtxGameImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            android:layout_width="350dp"
+            android:layout_height="0dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Imagen"
+            android:drawableStart="@drawable/ic_image_game"
+            android:drawablePadding="10dp"
             android:inputType="text"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxLanguageInput" />
 
@@ -146,31 +154,30 @@
             app:layout_constraintTop_toBottomOf="@+id/edtxLocationInput"
             app:srcCompat="@drawable/button_background_2" />
 
-
-
-
-
-        <ImageView
-            android:id="@+id/imgEPA"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="38dp"
+        <ImageButton
+            android:id="@+id/btDate"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgEPA8"
-            app:srcCompat="@drawable/ic_descricion" />
+            app:layout_constraintTop_toBottomOf="@+id/edtxPlayersInput"
+            app:srcCompat="@drawable/ic_manufactored_game_date"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        <ImageView
-            android:id="@+id/imgEPA8"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="265dp"
+        <DatePicker
+            android:id="@+id/idDatePickerItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:calendarTextColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_imagen" />
+            app:layout_constraintTop_toTopOf="parent">
 
-
+        </DatePicker>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,22 @@
 package com.andremachicao.ludoteca.game
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ScrollView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentAddGameBinding
 import com.andremachicao.ludoteca.game.model.Game
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.bind
 import java.util.*
 
 class AddGameFragment: Fragment(){
@@ -27,14 +31,53 @@ class AddGameFragment: Fragment(){
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        var state = "Seleccione un estado"
+        var numericalState:Double = 0.00
+        val listStates = arrayOf("Seleccione un estado","Nuevo","Poco uso","Usado")
+        var spinnerAdapter:ArrayAdapter<String> = ArrayAdapter(view.context,android.R.layout.simple_spinner_item,listStates)
+        binding.spinnerState.adapter = spinnerAdapter
+        binding.spinnerState.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                state = binding.spinnerState.selectedItem.toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                state = "Seleccione un estado"
+            }
+
+        }
+        binding.edtxTimeInput.setText(getDateFromDatePicker())
+        binding.btDate.setOnClickListener{
+            binding.idDatePickerItem.visibility= View.VISIBLE
+        }
+
+        binding.idDatePickerItem.setOnDateChangedListener{
+            date,year,month,day ->
+            binding.edtxTimeInput.setText(getDateFromDatePicker())
+            binding.idDatePickerItem.visibility= View.GONE
+        }
+
         binding.btAddGameAccept.setOnClickListener {
+            if (state != "Seleccione un estado"){
+                when(state){
+                    "Nuevo" -> numericalState = 3.00
+                    "Poco uso" -> numericalState =2.00
+                    "Usado" -> numericalState =1.00
+                }
+            }
+            else{
+                Toast.makeText(context,"Porfavor ingrese un estado",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             var id = UUID.randomUUID().toString()
             try{
                 var game = Game(
                     id = id,
                     name = binding.edtxNameGame.text.toString(),
-                    state = binding.edtxStateGame.text.toString().toDouble(),
+                    state = numericalState,
                     language = binding.edtxLanguageInput.text.toString(),
                     description = binding.edtxDescriptionGame.text.toString(),
                     players = binding.edtxPlayersInput.text.toString().toInt(),
@@ -60,5 +103,23 @@ class AddGameFragment: Fragment(){
 
             }
         }
+
+    fun getDateFromDatePicker(): String {
+        var day = binding.idDatePickerItem.dayOfMonth.toString().padStart(2,'0')
+        var month = (binding.idDatePickerItem.month+1).toString().padStart(2,'0')
+        var year= binding.idDatePickerItem.year.toString().padStart(4,'0')
+        return day+"/"+month+"/"+year
+    }
+
+    private fun requestDisallowParentInterceptTouchEvent(_v: View,disallowIntercept: Boolean){
+        var v =_v
+        while(v.parent != null && v.parent is View){
+            if (v.parent is ScrollView){
+                v.parent.requestDisallowInterceptTouchEvent(disallowIntercept)
+            }
+            v= v.parent as View
+        }
+    }
+
 
 }
