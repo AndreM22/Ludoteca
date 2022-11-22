@@ -51,13 +51,17 @@ class AddGameFragment: Fragment(){
         binding.edtxTimeInput.setText(getDateFromDatePicker())
         binding.btDate.setOnClickListener{
             binding.idDatePickerItem.visibility= View.VISIBLE
+            binding.btAddGameAccept.visibility= View.GONE
         }
+
 
         binding.idDatePickerItem.setOnDateChangedListener{
             date,year,month,day ->
             binding.edtxTimeInput.setText(getDateFromDatePicker())
             binding.idDatePickerItem.visibility= View.GONE
+            binding.btAddGameAccept.visibility= View.VISIBLE
         }
+
 
         binding.btAddGameAccept.setOnClickListener {
             if (state != "Seleccione un estado"){
@@ -111,15 +115,7 @@ class AddGameFragment: Fragment(){
         return day+"/"+month+"/"+year
     }
 
-    private fun requestDisallowParentInterceptTouchEvent(_v: View,disallowIntercept: Boolean){
-        var v =_v
-        while(v.parent != null && v.parent is View){
-            if (v.parent is ScrollView){
-                v.parent.requestDisallowInterceptTouchEvent(disallowIntercept)
-            }
-            v= v.parent as View
-        }
-    }
+
 
 
 }

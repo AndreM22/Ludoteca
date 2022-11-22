@@ -165,19 +165,21 @@
             app:srcCompat="@drawable/ic_manufactored_game_date"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <DatePicker
+        <com.andremachicao.ludoteca.utils.CustomDatePicker
             android:id="@+id/idDatePickerItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/red"
+            android:background="@color/placeholder_bg"
             android:calendarTextColor="@color/white"
+            android:dayOfWeekTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:headerBackground="@color/dark_red"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/edtxTimeInput">
 
-        </DatePicker>
+        </com.andremachicao.ludoteca.utils.CustomDatePicker>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
