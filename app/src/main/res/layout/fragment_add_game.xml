@@ -23,7 +23,6 @@
             android:drawableStart="@drawable/ic_game_name"
             android:drawablePadding="10dp"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +49,6 @@
             android:ems="10"
             android:hint="Idioma"
             android:inputType="text"
-            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinnerState" />
@@ -70,14 +68,16 @@
 
         <EditText
             android:id="@+id/edtxPlayersInput"
-            android:layout_width="350dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="Numero Jugadores"
+            android:hint="# Jugadores"
+            android:drawableStart="@drawable/ic_number_players"
+            android:drawablePadding="10dp"
             android:inputType="number"
-            android:minHeight="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toStartOf="@+id/btIncreasePlayers"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxDescriptionGame" />
 
@@ -87,10 +87,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:ems="10"
+            android:gravity="center"
+            android:textAlignment="center"
             android:hint="Fecha de fabricación"
             android:minHeight="60dp"
-            android:textAlignment="center"
-            android:gravity="center"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btDate"
@@ -98,27 +98,29 @@
 
         <EditText
             android:id="@+id/edtxPriceInput"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
+            android:drawableStart="@drawable/ic_money"
+            android:drawablePadding="10dp"
             android:hint="Precio"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toStartOf="@+id/bolivianosInfo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxTimeInput" />
 
         <EditText
             android:id="@+id/edtxLocationInput"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Ubiacion"
             android:inputType="text"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPriceInput" />
 
@@ -132,7 +134,6 @@
             android:drawableStart="@drawable/ic_image_game"
             android:drawablePadding="10dp"
             android:inputType="text"
-            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxLanguageInput" />
@@ -180,6 +181,45 @@
             app:layout_constraintTop_toTopOf="@id/edtxTimeInput">
 
         </com.andremachicao.ludoteca.utils.CustomDatePicker>
+
+
+        <ImageButton
+            android:id="@+id/btDecreasePlayers"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/light_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxDescriptionGame"
+            app:srcCompat="@drawable/ic_decrease_players"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/btIncreasePlayers"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="12dp"
+            android:background="@color/light_red"
+            app:layout_constraintEnd_toStartOf="@+id/btDecreasePlayers"
+            app:layout_constraintTop_toBottomOf="@+id/edtxDescriptionGame"
+            app:srcCompat="@drawable/ic_increase_players"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/bolivianosInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:minHeight="60dp"
+            android:text="Bs."
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxTimeInput" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

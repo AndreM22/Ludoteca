@@ -33,6 +33,7 @@ class AddGameFragment: Fragment(){
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // Para configurar el estado
         var state = "Seleccione un estado"
         var numericalState:Double = 0.00
         val listStates = arrayOf("Seleccione un estado","Nuevo","Poco uso","Usado")
@@ -48,7 +49,8 @@ class AddGameFragment: Fragment(){
             }
 
         }
-        binding.edtxTimeInput.setText(getDateFromDatePicker())
+        /////////////////////////////////////////////////////
+       // Parte para configurar el calendario
         binding.btDate.setOnClickListener{
             binding.idDatePickerItem.visibility= View.VISIBLE
             binding.btAddGameAccept.visibility= View.GONE
@@ -61,8 +63,34 @@ class AddGameFragment: Fragment(){
             binding.idDatePickerItem.visibility= View.GONE
             binding.btAddGameAccept.visibility= View.VISIBLE
         }
+        ///////////////////////////////////////////////////////////
+        binding.btIncreasePlayers.setOnClickListener{
+            var players = 0
+            if(binding.edtxPlayersInput.text.toString() == "") {
+                players = 1
+                binding.edtxPlayersInput.setText(players.toString())
+                Toast.makeText(
+                    context,
+                    "Bueno",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }else{
+                players = binding.edtxPlayersInput.text.toString().toInt()
+                players++
+                binding.edtxPlayersInput.setText(players.toString())
+            }
 
-
+        }
+        binding.btDecreasePlayers.setOnClickListener{
+            var players = 0
+            if (binding.edtxPlayersInput.text.toString() == ""){
+                binding.edtxPlayersInput.setText(players.toString())
+            }else if(binding.edtxPlayersInput.text.toString().toInt() != 0){
+                players = binding.edtxPlayersInput.text.toString().toInt()
+                players--
+                binding.edtxPlayersInput.setText(players.toString())
+            }
+        }
         binding.btAddGameAccept.setOnClickListener {
             if (state != "Seleccione un estado"){
                 when(state){
@@ -76,9 +104,9 @@ class AddGameFragment: Fragment(){
                 return@setOnClickListener
             }
 
-            var id = UUID.randomUUID().toString()
+            val id = UUID.randomUUID().toString()
             try{
-                var game = Game(
+                val game = Game(
                     id = id,
                     name = binding.edtxNameGame.text.toString(),
                     state = numericalState,
@@ -109,9 +137,9 @@ class AddGameFragment: Fragment(){
         }
 
     fun getDateFromDatePicker(): String {
-        var day = binding.idDatePickerItem.dayOfMonth.toString().padStart(2,'0')
-        var month = (binding.idDatePickerItem.month+1).toString().padStart(2,'0')
-        var year= binding.idDatePickerItem.year.toString().padStart(4,'0')
+        val day = binding.idDatePickerItem.dayOfMonth.toString().padStart(2,'0')
+        val month = (binding.idDatePickerItem.month+1).toString().padStart(2,'0')
+        val year= binding.idDatePickerItem.year.toString().padStart(4,'0')
         return day+"/"+month+"/"+year
     }
 
