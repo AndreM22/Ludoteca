@@ -22,7 +22,7 @@
     <EditText
         android:id="@+id/txTextSearchGame"
         android:layout_width="320dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:hint="Buscar"
         android:textSize="24sp"
         android:drawableStart="@drawable/ic_search"
