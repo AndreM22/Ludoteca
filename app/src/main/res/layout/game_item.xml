@@ -87,9 +87,19 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="@{String.valueOf(gameInfo.state)}"
-                tools:text="5/10"
+                tools:text="3.00"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItem"
+                app:layout_constraintTop_toBottomOf="@+id/idNameGameItem" />
+
+            <TextView
+                android:id="@+id/stateLabelItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="/3"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/idStateItem"
                 app:layout_constraintTop_toBottomOf="@+id/idNameGameItem" />
 
 

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_gameDetailsFragment"
             app:destination="@id/gameDetailsFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_mapActivity"
+            app:destination="@id/mapActivity" />
     </fragment>
     <fragment
         android:id="@+id/addGameFragment"
@@ -53,4 +56,8 @@
             android:name="gameInfo"
             app:argType="com.andremachicao.ludoteca.game.model.Game" />
     </fragment>
+    <activity
+        android:id="@+id/mapActivity"
+        android:name="com.andremachicao.ludoteca.MapActivity"
+        android:label="MapActivity" />
 </navigation>

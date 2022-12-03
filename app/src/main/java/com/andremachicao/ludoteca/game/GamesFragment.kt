@@ -47,8 +47,10 @@ class GamesFragment: Fragment() {
 
 
         binding.btAddGame.setOnClickListener {
-            val goToAddGamePage = GamesFragmentDirections.actionGamesFragmentToAddGameFragment()
-            findNavController().navigate(goToAddGamePage)
+            val goToMap = GamesFragmentDirections.actionGamesFragmentToMapActivity()
+            findNavController().navigate(goToMap)
+        //val goToAddGamePage = GamesFragmentDirections.actionGamesFragmentToAddGameFragment()
+            //findNavController().navigate(goToAddGamePage)
         }
 
     }
