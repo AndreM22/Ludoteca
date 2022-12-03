@@ -17,19 +17,25 @@
         android:theme="@style/Theme.Ludoteca"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MapActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity
-            android:name=".loginRegister.LoginRegisterActivity"
-            android:exported="true">
+            android:name=".splash.SplashActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+        <activity
+            android:name=".loginRegister.LoginRegisterActivity"
+            android:exported="true">
+
         </activity>
 
         <meta-data

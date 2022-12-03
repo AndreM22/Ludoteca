@@ -7,13 +7,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_board_game" />
+        app:srcCompat="@drawable/icon_ludoteca" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentLoginRegister"
