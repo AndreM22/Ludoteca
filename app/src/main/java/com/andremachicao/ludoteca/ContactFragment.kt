@@ -1,10 +1,16 @@
 package com.andremachicao.ludoteca
 
+import android.content.ActivityNotFoundException
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.content.Intent
+import android.net.Uri
+import java.lang.Exception
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,12 +27,16 @@ class ContactFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -34,7 +44,15 @@ class ContactFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact, container, false)
+        val view = inflater.inflate(R.layout.fragment_contact, container, false)
+
+        val facebookButton : ImageButton = view.findViewById(R.id.buttonFacebookPage)
+
+        facebookButton.setOnClickListener{
+            goToFacebookPage("100078434003257")
+        }
+
+        return view
     }
 
     companion object {
@@ -56,4 +74,16 @@ class ContactFragment : Fragment() {
                 }
             }
     }
+
+    fun goToFacebookPage(id:String){
+        try {
+            val intent = Intent(Intent.ACTION_VIEW,Uri.parse("fb://page/"+id))
+            startActivity(intent)
+        }catch (e: ActivityNotFoundException){
+            val intent = Intent(Intent.ACTION_VIEW,Uri.parse("https://www.facebook.com/"+id))
+            startActivity(intent)
+        }
+    }
+
+
 }
