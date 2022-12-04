@@ -32,8 +32,11 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:background="@color/button_gallery"
             android:dropDownWidth="match_parent"
             android:minHeight="48dp"
+            android:popupBackground="@color/button_gallery"
+            app:barrierMargin="@dimen/fragment_horizontal_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtxNameGame"
@@ -64,7 +67,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxGameImage" />
+            app:layout_constraintTop_toBottomOf="@id/image_container" />
 
         <EditText
             android:id="@+id/edtxPlayersInput"
@@ -85,15 +88,14 @@
             android:id="@+id/edtxTimeInput"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
             android:ems="10"
-            android:gravity="center"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
+            android:layout_marginTop="45dp"
             android:hint="Fecha de fabricación"
-            android:minHeight="60dp"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btDate"
+            android:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toStartOf="@+id/btDate"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPlayersInput" />
 
         <EditText
@@ -109,7 +111,7 @@
             android:minHeight="48dp"
             app:layout_constraintEnd_toStartOf="@+id/bolivianosInfo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxTimeInput" />
+            app:layout_constraintTop_toBottomOf="@id/btDate" />
 
         <EditText
             android:id="@+id/edtxLocationInput"
@@ -124,20 +126,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPriceInput" />
 
-        <EditText
-            android:id="@+id/edtxGameImage"
-            android:layout_width="350dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Imagen"
-            android:drawableStart="@drawable/ic_image_game"
-            android:drawablePadding="10dp"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxLanguageInput" />
-
 
         <Button
             android:id="@+id/btAddGameAccept"
@@ -149,6 +137,7 @@
             android:layout_marginBottom="30dp"
             android:text="Añadir"
             android:textSize="20sp"
+            android:background="@drawable/button_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -159,28 +148,46 @@
             android:id="@+id/btDate"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtxPlayersInput"
             app:srcCompat="@drawable/ic_manufactored_game_date"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <com.andremachicao.ludoteca.utils.CustomDatePicker
-            android:id="@+id/idDatePickerItem"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/date_picker_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/placeholder_bg"
-            android:calendarTextColor="@color/white"
-            android:dayOfWeekTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:headerBackground="@color/dark_red"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/edtxTimeInput">
+            app:layout_constraintTop_toBottomOf="@id/image_container"
+            android:visibility="gone">
+            <com.andremachicao.ludoteca.utils.CustomDatePicker
+                android:id="@+id/idDatePickerItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/placeholder_bg"
+                android:calendarTextColor="@color/white"
+                android:dayOfWeekTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:headerBackground="@color/dark_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </com.andremachicao.ludoteca.utils.CustomDatePicker>
+            <Button
+                android:id="@+id/confirmDate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Confirmar"
+                android:backgroundTint="@color/dark_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idDatePickerItem"/>
 
-        </com.andremachicao.ludoteca.utils.CustomDatePicker>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
         <ImageButton
@@ -219,7 +226,92 @@
             android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtxTimeInput" />
+            app:layout_constraintTop_toBottomOf="@id/btDate" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/image_container"
+            android:layout_width="350dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxLanguageInput">
+
+            <TextView
+                android:id="@+id/img_input_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Imágenes del juego"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/btTakePicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tomar foto"
+                android:backgroundTint="@color/button_add_image"
+                app:layout_constraintEnd_toStartOf="@+id/btGallery"
+                app:layout_constraintStart_toEndOf="@id/imgGamesInput"
+                app:layout_constraintTop_toBottomOf="@id/img_input_text" />
+
+            <Button
+                android:id="@+id/btGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:text="Galeria"
+                android:backgroundTint="@color/button_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_input_text" />
+
+            <ImageView
+                android:id="@+id/imgGamesInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_input_text"
+                app:srcCompat="@drawable/ic_image_game" />
+
+            <ImageView
+                android:id="@+id/img1Games"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePicture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/activities" />
+            <ImageView
+                android:id="@+id/img3Games"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePicture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/activities" />
+            <ImageView
+                android:id="@+id/img2Games"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePicture"
+                app:layout_constraintEnd_toStartOf="@id/img3Games"
+                app:layout_constraintStart_toEndOf="@id/img1Games"
+                app:srcCompat="@drawable/activities" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

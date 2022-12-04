@@ -55,6 +55,9 @@
         <argument
             android:name="gameInfo"
             app:argType="com.andremachicao.ludoteca.game.model.Game" />
+        <action
+            android:id="@+id/action_gameUpdateFragment_to_gameDetailsFragment"
+            app:destination="@id/gameDetailsFragment" />
     </fragment>
     <activity
         android:id="@+id/mapActivity"

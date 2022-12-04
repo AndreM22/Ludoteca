@@ -3,7 +3,7 @@ package com.andremachicao.ludoteca.game.model
 import java.io.Serializable
 
 data class Game(
-    val id: String,
+    var id: String,
     val name: String,
     val state: Double,
     val language: String,

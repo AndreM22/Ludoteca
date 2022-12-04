@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -69,7 +70,14 @@ class GameUpdateFragment:Fragment() {
                 Toast.makeText(context,"Datos incompletos, porfavor llenar", Toast.LENGTH_SHORT).show()
             }
         }
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val goToPrevious = GameUpdateFragmentDirections.actionGameUpdateFragmentToGameDetailsFragment(args.gameInfo)
+                findNavController().navigate(goToPrevious)
+            }
+        })
     }
+
 
 }
