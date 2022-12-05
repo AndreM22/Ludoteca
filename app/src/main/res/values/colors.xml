@@ -11,4 +11,6 @@
     <color name="dark_red">#8e0000</color>
     <color name="light_red">#F2D1C9</color>
     <color name="placeholder_bg">#dddddd</color>
+    <color name="button_gallery">#0EB1D2</color>
+    <color name="button_add_image">#364156</color>
 </resources>

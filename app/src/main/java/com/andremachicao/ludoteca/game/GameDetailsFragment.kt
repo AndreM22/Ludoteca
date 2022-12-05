@@ -1,10 +1,13 @@
 package com.andremachicao.ludoteca.game
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -13,13 +16,16 @@ import com.andremachicao.ludoteca.databinding.FragmentGameDetailsBinding
 import com.andremachicao.ludoteca.viewmodel.MainViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class GameDetailsFragment : Fragment() {
 
     private lateinit var binding : FragmentGameDetailsBinding
     private val args: GameDetailsFragmentArgs by navArgs()
     private val db = Firebase.firestore
-    private val viewModel by lazy { ViewModelProviders.of(this)[MainViewModel::class.java] }
+    private val storage = Firebase.storage
+    private val list = mutableListOf<CarouselItem>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,6 +37,13 @@ class GameDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.gameInfo = args.gameInfo
+        for (element in args.gameInfo.images){
+            list.add(CarouselItem(element))
+        }
+        //list.add(CarouselItem(args.gameInfo.image))
+        //list.add(CarouselItem("https://images.drive.com.au/driveau/image/private/c_fill,f_auto,g_auto,h_674,q_auto:eco,w_1200/ca-s3/2013/03/Suzuki-SX4-5-625x404.jpg"))
+        //list.add(CarouselItem("https://www.km77.com/media/fotos/suzuki_sx4_2010_3480_1.jpg"))
+        binding.carousel.addData(list)
 
         binding.btUpdateGame.setOnClickListener {
             Toast.makeText(context,"Entro al on click del update",Toast.LENGTH_SHORT).show()
@@ -41,11 +54,36 @@ class GameDetailsFragment : Fragment() {
         binding.buttonDeleteGame.setOnClickListener {
             db.collection("Games").document(args.gameInfo.id).delete().addOnSuccessListener {
                 val goToMainGameList = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
-                Toast.makeText(context,"Se elimino el juego con el id ${args.gameInfo.id}",Toast.LENGTH_SHORT).show()
+                val storageRef = storage.reference
+                val desertRef1 = storageRef.child("games/${args.gameInfo.id}/images/img_1.jpeg")
+                val desertRef2 = storageRef.child("games/${args.gameInfo.id}/images/img_2.jpeg")
+                val desertRef3 = storageRef.child("games/${args.gameInfo.id}/images/img_3.jpeg")
+                desertRef1.delete().addOnSuccessListener {
+                }.addOnFailureListener{
+                    Log.d(TAG,"El error es: $it")
+                }
+                desertRef2.delete().addOnSuccessListener {
+                }.addOnFailureListener{
+                    Log.d(TAG,"El error es: $it")
+                }
+                desertRef3.delete().addOnSuccessListener {
+                }.addOnFailureListener{
+                    Log.d(TAG,"El error es: $it")
+                }
+                Toast.makeText(context,"Se elimino el juego",Toast.LENGTH_SHORT).show()
+
                 findNavController().navigate(goToMainGameList)
             }
 
         }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val goToPrevious = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
+                findNavController().navigate(goToPrevious)
+            }
+        })
+
     }
 
 }

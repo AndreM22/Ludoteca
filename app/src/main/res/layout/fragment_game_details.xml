@@ -10,240 +10,281 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_red">
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollInfoGamePage"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_red">
 
 
-        <ImageView
-            android:id="@+id/infoGameContainer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginBottom="7dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/button_background" />
-
-        <ImageView
-            android:id="@+id/imgGameDetails"
-            srcUrl2="@{gameInfo.image}"
-            android:layout_width="150dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayersDetails"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
-            app:layout_constraintTop_toTopOf="@+id/infoGameContainer"
-            tools:srcCompat="@drawable/activities" />
-
-        <TextView
-            android:id="@+id/gameNameDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{gameInfo.name}"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@+id/stateInfoDetails"
-            app:layout_constraintStart_toEndOf="@id/imgGameDetails"
-            app:layout_constraintTop_toTopOf="@+id/infoGameContainer"
-            tools:text="Catán" />
-
-        <TextView
-            android:id="@+id/stateInfoDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{String.valueOf(gameInfo.state)}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayersDetails"
-            app:layout_constraintStart_toEndOf="@+id/imgGameDetails"
-            tools:text="Catan" />
-
-        <TextView
-            android:id="@+id/stateTen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="/3"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayersDetails"
-            app:layout_constraintStart_toEndOf="@+id/stateInfoDetails" />
-
-        <TextView
-            android:id="@+id/gamePriceDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{String.valueOf(gameInfo.price)}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayersDetails"
-            app:layout_constraintStart_toEndOf="@+id/stateTen"
-            tools:text="7777.77" />
-
-        <TextView
-            android:id="@+id/bolivianosInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginBottom="10dp"
-            android:text="Bs."
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/labelPlayersDetails"
-            app:layout_constraintStart_toEndOf="@+id/gamePriceDetails" />
-
-        <TextView
-            android:id="@+id/labelPlayersDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginBottom="5dp"
-            android:text="# Players :"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/languageLabelDetails"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
-
-        <TextView
-            android:id="@+id/languageLabelDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginBottom="10dp"
-            android:text="Lenguaje :"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/timeLabelDetails"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
-
-        <TextView
-            android:id="@+id/timeLabelDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginBottom="10dp"
-            android:text="Fabricación :"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/locationLabelDetails"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
-
-        <TextView
-            android:id="@+id/locationLabelDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginBottom="10dp"
-            android:text="Locación :"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionDataContainerDetails"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
-
-
-        <TextView
-            android:id="@+id/playersDataDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="5dp"
-            android:text="@{String.valueOf(gameInfo.players)}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/languageLabelDetails"
-            app:layout_constraintStart_toEndOf="@+id/labelPlayersDetails"
-            tools:text="16" />
-
-        <TextView
-            android:id="@+id/languageDataDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{gameInfo.language}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/timeLabelDetails"
-            app:layout_constraintStart_toEndOf="@+id/languageLabelDetails"
-            tools:text="Espaniol" />
-
-        <TextView
-            android:id="@+id/timeDataDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{gameInfo.time}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/locationLabelDetails"
-            app:layout_constraintStart_toEndOf="@+id/timeLabelDetails"
-            tools:text="20/11/2022" />
-
-        <TextView
-            android:id="@+id/locationDataDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@{gameInfo.location}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionDataContainerDetails"
-            app:layout_constraintStart_toEndOf="@+id/locationLabelDetails"
-            tools:text="La Paz" />
-
-
-        <ScrollView
-            android:id="@+id/descriptionDataContainerDetails"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/btUpdateGame"
-            app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer">
+            <ImageView
+                android:id="@+id/infoGameContainer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/button_background" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/gameNameDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@{gameInfo.name}"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:background="@color/button_add_image"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainer"
+                app:layout_constraintTop_toTopOf="@+id/infoGameContainer"
+                tools:text="Catán" />
+
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/carousel"
+                android:layout_width="330dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainer"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+                app:layout_constraintTop_toBottomOf="@id/gameNameDetails"/>
+
+
+            <TextView
+                android:id="@+id/stateLabelnfoPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="45dp"
+                android:text="Estado: "
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+                app:layout_constraintTop_toBottomOf="@+id/carousel" />
+            <TextView
+                android:id="@+id/stateInfoDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{String.valueOf(gameInfo.state)}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/carousel"
+                app:layout_constraintStart_toEndOf="@id/stateLabelnfoPage"
+                tools:text="3.00" />
+
+            <TextView
+                android:id="@+id/stateTen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="5dp"
+                android:text="/3"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/carousel"
+                app:layout_constraintStart_toEndOf="@+id/stateInfoDetails" />
+
+            <TextView
+                android:id="@+id/priceLabelInfoPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:text="Precio: "
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/stateLabelnfoPage"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainer"/>
+
+            <TextView
+                android:id="@+id/gamePriceDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
+                android:text="@{String.valueOf(gameInfo.price)}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/stateInfoDetails"
+                app:layout_constraintStart_toEndOf="@id/priceLabelInfoPage"
+                tools:text="7777.77" />
+
+            <TextView
+                android:id="@+id/bolivianosInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="18dp"
+                android:text="Bs."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/stateInfoDetails"
+                app:layout_constraintStart_toEndOf="@+id/gamePriceDetails" />
+
+            <TextView
+                android:id="@+id/labelPlayersDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:text="# Jugadores :"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/priceLabelInfoPage"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
+
+            <TextView
+                android:id="@+id/playersDataDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:text="@{String.valueOf(gameInfo.players)}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/gamePriceDetails"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayersDetails"
+                tools:text="16" />
+
+            <TextView
+                android:id="@+id/languageLabelDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:text="Idioma :"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/labelPlayersDetails"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
+
+            <TextView
+                android:id="@+id/languageDataDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:text="@{gameInfo.language}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/labelPlayersDetails"
+                app:layout_constraintStart_toEndOf="@+id/languageLabelDetails"
+                tools:text="Espaniol" />
+
+            <TextView
+                android:id="@+id/timeLabelDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:text="Fecha de fabricación :"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/languageLabelDetails"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
+
+            <TextView
+                android:id="@+id/timeDataDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:text="@{gameInfo.time}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/languageDataDetails"
+                app:layout_constraintStart_toEndOf="@id/timeLabelDetails"
+                tools:text="20/11/2022" />
+
+            <TextView
+                android:id="@+id/locationLabelDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:text="Locación :"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/timeLabelDetails"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
+
+
+            <TextView
+                android:id="@+id/locationDataDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:text="@{gameInfo.location}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/timeLabelDetails"
+                app:layout_constraintStart_toEndOf="@+id/locationLabelDetails"
+                tools:text="La Paz" />
+
+            <TextView
+                android:id="@+id/descriptionLabelInfoPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Descripción"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainer"
+                app:layout_constraintTop_toBottomOf="@id/locationLabelDetails" />
+
+
+            <TextView
+                android:id="@+id/descriptionDataInfoPage"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:text="@{gameInfo.description}"
                 android:textSize="16sp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Eget magna fermentum iaculis eu non diam. Fermentum posuere urna nec tincidunt praesent semper feugiat. Nisi vitae suscipit tellus mauris a diam maecenas. Cursus euismod quis viverra nibh cras. Tincidunt vitae semper quis lectus nulla. Fermentum dui faucibus in ornare quam viverra. Non arcu risus quis varius quam quisque id diam vel. Aliquam eleifend mi in nulla posuere. Ultricies lacus sed turpis tincidunt id. Malesuada fames ac turpis egestas. Tellus integer feugiat scelerisque varius morbi enim nunc. Pretium fusce id velit ut." />
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintTop_toBottomOf="@id/descriptionLabelInfoPage"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Eget magna fermentum iaculis eu non diam. Fermentum posuere urna nec tincidunt praesent semper feugiat. Nisi vitae suscipit tellus mauris a diam maecenas." />
 
-        </ScrollView>
+            <Button
+                android:id="@+id/btUpdateGame"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginTop="20dp"
+                android:text="Actualizar Información"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/descriptionDataInfoPage"
+                app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+                app:srcCompat="@drawable/button_background_2" />
 
-        <Button
-            android:id="@+id/btUpdateGame"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="Actualizar Información"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonDeleteGame"
-            app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
-            app:srcCompat="@drawable/button_background_2" />
+            <Button
+                android:id="@+id/buttonDeleteGame"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="Eliminar Juego"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/btUpdateGame"
+                app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
+                app:srcCompat="@drawable/button_background_2" />
 
-        <Button
-            android:id="@+id/buttonDeleteGame"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="Eliminar Juego"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/infoGameContainer"
-            app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
-            app:srcCompat="@drawable/button_background_2" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
 </layout>
 

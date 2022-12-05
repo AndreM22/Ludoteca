@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -30,7 +31,7 @@ class GameUpdateFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.edtxNameGameUpdate.setText(args.gameInfo.name)
-        binding.edtxGameImageUpdate.setText(args.gameInfo.image)
+        binding.edtxGameImageUpdate.setText("Perro")
         binding.edtxStateGameUpdate.setText(args.gameInfo.state.toString())
         binding.edtxLanguageInputUpdate.setText(args.gameInfo.language)
         binding.edtxDescriptionGameUpdate.setText(args.gameInfo.description)
@@ -51,7 +52,7 @@ class GameUpdateFragment:Fragment() {
                     "time" to binding.edtxTimeInputUpdate.text.toString(),
                     "price" to binding.edtxPriceInputUpdate.text.toString().toDouble(),
                     "location" to binding.edtxLocationInputUpdate.text.toString(),
-                    "image" to binding.edtxGameImageUpdate.text.toString()
+                    "images" to listOf<String>("Perro,Gato")
                 )
 
                 db.collection("Games").document(args.gameInfo.id).update(gameMap)
@@ -69,7 +70,14 @@ class GameUpdateFragment:Fragment() {
                 Toast.makeText(context,"Datos incompletos, porfavor llenar", Toast.LENGTH_SHORT).show()
             }
         }
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val goToPrevious = GameUpdateFragmentDirections.actionGameUpdateFragmentToGameDetailsFragment(args.gameInfo)
+                findNavController().navigate(goToPrevious)
+            }
+        })
     }
+
 
 }
