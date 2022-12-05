@@ -31,7 +31,7 @@ class GameUpdateFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.edtxNameGameUpdate.setText(args.gameInfo.name)
-        binding.edtxGameImageUpdate.setText(args.gameInfo.image)
+        binding.edtxGameImageUpdate.setText("Perro")
         binding.edtxStateGameUpdate.setText(args.gameInfo.state.toString())
         binding.edtxLanguageInputUpdate.setText(args.gameInfo.language)
         binding.edtxDescriptionGameUpdate.setText(args.gameInfo.description)
@@ -52,7 +52,7 @@ class GameUpdateFragment:Fragment() {
                     "time" to binding.edtxTimeInputUpdate.text.toString(),
                     "price" to binding.edtxPriceInputUpdate.text.toString().toDouble(),
                     "location" to binding.edtxLocationInputUpdate.text.toString(),
-                    "image" to binding.edtxGameImageUpdate.text.toString()
+                    "images" to listOf<String>("Perro,Gato")
                 )
 
                 db.collection("Games").document(args.gameInfo.id).update(gameMap)

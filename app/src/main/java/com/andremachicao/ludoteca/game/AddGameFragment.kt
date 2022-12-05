@@ -172,40 +172,8 @@ class AddGameFragment: Fragment(){
                 return@setOnClickListener
             }
 
-
             val id = UUID.randomUUID().toString()
             uploadImages(id)
-            /*
-            try{
-                val game = Game(
-                    id = id,
-                    name = binding.edtxNameGame.text.toString(),
-                    state = numericalState,
-                    language = binding.edtxLanguageInput.text.toString(),
-                    description = binding.edtxDescriptionGame.text.toString(),
-                    players = binding.edtxPlayersInput.text.toString().toInt(),
-                    time = binding.edtxTimeInput.text.toString(),
-                    price = binding.edtxPriceInput.text.toString().toDouble(),
-                    location = binding.edtxLocationInput.text.toString(),
-                    image = "Perro" )
-                uploadImages(id)
-                db.collection("Games").document(id).set(game)
-                    .addOnSuccessListener { documentReference ->
-                        Log.d(TAG, "successful")
-                        Toast.makeText(context,"Se guardo el nuevo juego",Toast.LENGTH_SHORT).show()
-                        var goToMainGamePage = AddGameFragmentDirections.actionAddGameFragmentToGamesFragment()
-                        findNavController().navigate(goToMainGamePage)
-
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(TAG, "Error adding document", e)
-                    }
-            }catch (e: Exception){
-                Toast.makeText(context,"Datos incompletos, porfavor llenar",Toast.LENGTH_SHORT).show()
-            }
-
-             */
-
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
@@ -288,6 +256,7 @@ class AddGameFragment: Fragment(){
 
     private fun uploadImages(id:String) {
         val storageRef = storage.reference
+        val listOfImages = mutableListOf<String>()
         //val imageRoute = storageRef.child("games/$id/images/img_${System.currentTimeMillis()}.jpeg")
         val imageRoute = storageRef.child("games/$id/images/img_1.jpeg")
         binding.img1Games.isDrawingCacheEnabled =true
@@ -296,19 +265,105 @@ class AddGameFragment: Fragment(){
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos)
         val data = baos.toByteArray()
-
         var uploadTask = imageRoute.putBytes(data)
-        uploadTask.addOnFailureListener{
+        if(img_count == 2){
+            uploadTask.addOnFailureListener{
 
-        }.addOnSuccessListener { taskSnapshot ->
-            imageRoute.downloadUrl.addOnSuccessListener {
-                Log.v("STORAGE","-------->>>"+it)
-                uploadGame(id,it)
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                    uploadGame(id,listOfImages)
+                }
             }
         }
 
+        if (img_count==3){
+            val imageRoute2 = storageRef.child("games/$id/images/img_2.jpeg")
+            binding.img2Games.isDrawingCacheEnabled =true
+            binding.img2Games.buildDrawingCache()
+            val bitmap2 = (binding.img2Games.drawable as BitmapDrawable).bitmap
+            val baos2 = ByteArrayOutputStream()
+            bitmap2.compress(Bitmap.CompressFormat.JPEG,50,baos2)
+            val data2 = baos2.toByteArray()
+
+            uploadTask.addOnFailureListener{
+
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                }
+            }
+
+            var uploadTask2 = imageRoute2.putBytes(data2)
+            uploadTask2.addOnFailureListener{
+
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute2.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                    uploadGame(id,listOfImages)
+                }
+            }
+        }
+        if (img_count==4){
+            val imageRoute2 = storageRef.child("games/$id/images/img_2.jpeg")
+            binding.img2Games.isDrawingCacheEnabled =true
+            binding.img2Games.buildDrawingCache()
+            val bitmap2 = (binding.img2Games.drawable as BitmapDrawable).bitmap
+            val baos2 = ByteArrayOutputStream()
+            bitmap2.compress(Bitmap.CompressFormat.JPEG,50,baos2)
+            val data2 = baos2.toByteArray()
+
+            val imageRoute3 = storageRef.child("games/$id/images/img_3.jpeg")
+            binding.img3Games.isDrawingCacheEnabled =true
+            binding.img3Games.buildDrawingCache()
+            val bitmap3 = (binding.img3Games.drawable as BitmapDrawable).bitmap
+            val baos3 = ByteArrayOutputStream()
+            bitmap3.compress(Bitmap.CompressFormat.JPEG,50,baos3)
+            val data3 = baos3.toByteArray()
+
+            uploadTask.addOnFailureListener{
+
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                }
+            }
+
+            var uploadTask2 = imageRoute2.putBytes(data2)
+            uploadTask2.addOnFailureListener{
+
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute2.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                }
+            }
+            var uploadTask3 = imageRoute3.putBytes(data3)
+            uploadTask3.addOnFailureListener{
+
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRoute3.downloadUrl.addOnSuccessListener {
+                    Log.v("STORAGE","-------->>>"+it)
+                    listOfImages.add(it.toString())
+                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                    uploadGame(id,listOfImages)
+                }
+            }
+        }
+
+
+
     }
-    private fun uploadGame(id:String,it: Uri){
+    private fun uploadGame(id:String,images:List<String>){
         try{
             val game = Game(
                 id = id,
@@ -320,7 +375,7 @@ class AddGameFragment: Fragment(){
                 time = binding.edtxTimeInput.text.toString(),
                 price = binding.edtxPriceInput.text.toString().toDouble(),
                 location = binding.edtxLocationInput.text.toString(),
-                image = it.toString() )
+                images = images )
 
             db.collection("Games").document(id).set(game)
                 .addOnSuccessListener { documentReference ->
