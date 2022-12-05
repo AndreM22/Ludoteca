@@ -114,5 +114,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
+    //CircleImageView
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
 
 }
