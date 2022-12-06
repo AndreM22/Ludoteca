@@ -2,6 +2,7 @@ package com.andremachicao.ludoteca.game
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,6 +25,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentAddGameBinding
 import com.andremachicao.ludoteca.game.model.Game
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -36,8 +39,11 @@ class AddGameFragment: Fragment(){
     private lateinit var binding: FragmentAddGameBinding
     private var img_count = 1
     private val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
     private var storage = Firebase.storage
     private var numericalState by Delegates.notNull<Double>()
+    private lateinit var progressDialog: ProgressDialog
+
 
     companion object{
         private val IMAGE_CHOOSE = 1000;
@@ -55,6 +61,12 @@ class AddGameFragment: Fragment(){
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        auth = Firebase.auth
+        //Progress dialog
+        progressDialog = ProgressDialog(context)
+        progressDialog.setTitle("Porfavor espere")
+        progressDialog.setMessage("Registrando...")
+        progressDialog.setCanceledOnTouchOutside(false)
         // Para configurar el estado
         var state = "Seleccione un estado"
         numericalState = 0.00
@@ -173,6 +185,7 @@ class AddGameFragment: Fragment(){
             }
 
             val id = UUID.randomUUID().toString()
+            progressDialog.show()
             uploadImages(id)
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
@@ -258,7 +271,7 @@ class AddGameFragment: Fragment(){
         val storageRef = storage.reference
         val listOfImages = mutableListOf<String>()
         //val imageRoute = storageRef.child("games/$id/images/img_${System.currentTimeMillis()}.jpeg")
-        val imageRoute = storageRef.child("games/$id/images/img_1.jpeg")
+        val imageRoute = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_1.jpeg")
         binding.img1Games.isDrawingCacheEnabled =true
         binding.img1Games.buildDrawingCache()
         val bitmap = (binding.img1Games.drawable as BitmapDrawable).bitmap
@@ -280,7 +293,7 @@ class AddGameFragment: Fragment(){
         }
 
         if (img_count==3){
-            val imageRoute2 = storageRef.child("games/$id/images/img_2.jpeg")
+            val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
             binding.img2Games.isDrawingCacheEnabled =true
             binding.img2Games.buildDrawingCache()
             val bitmap2 = (binding.img2Games.drawable as BitmapDrawable).bitmap
@@ -311,7 +324,7 @@ class AddGameFragment: Fragment(){
             }
         }
         if (img_count==4){
-            val imageRoute2 = storageRef.child("games/$id/images/img_2.jpeg")
+            val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
             binding.img2Games.isDrawingCacheEnabled =true
             binding.img2Games.buildDrawingCache()
             val bitmap2 = (binding.img2Games.drawable as BitmapDrawable).bitmap
@@ -319,7 +332,7 @@ class AddGameFragment: Fragment(){
             bitmap2.compress(Bitmap.CompressFormat.JPEG,50,baos2)
             val data2 = baos2.toByteArray()
 
-            val imageRoute3 = storageRef.child("games/$id/images/img_3.jpeg")
+            val imageRoute3 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_3.jpeg")
             binding.img3Games.isDrawingCacheEnabled =true
             binding.img3Games.buildDrawingCache()
             val bitmap3 = (binding.img3Games.drawable as BitmapDrawable).bitmap
@@ -377,17 +390,22 @@ class AddGameFragment: Fragment(){
                 location = binding.edtxLocationInput.text.toString(),
                 images = images )
 
-            db.collection("Games").document(id).set(game)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "successful")
-                    Toast.makeText(context,"Se guardo el nuevo juego",Toast.LENGTH_SHORT).show()
-                    var goToMainGamePage = AddGameFragmentDirections.actionAddGameFragmentToGamesFragment()
-                    findNavController().navigate(goToMainGamePage)
+            auth.currentUser?.email?.let { email ->
+                db.collection("users").document(email).collection("Games").document(id).set(game)
+                    .addOnSuccessListener { documentReference ->
+                        progressDialog.dismiss()
+                        Log.d(TAG, "successful")
+                        Toast.makeText(context,"Se guardo el nuevo juego",Toast.LENGTH_SHORT).show()
+                        var goToMainGamePage = AddGameFragmentDirections.actionAddGameFragmentToGamesFragment()
+                        findNavController().navigate(goToMainGamePage)
 
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
+                    }
+                    .addOnFailureListener { e ->
+                        progressDialog.dismiss()
+                        Toast.makeText(context,"No se pudo subir el juego",Toast.LENGTH_SHORT).show()
+                        Log.w(TAG, "Error adding document", e)
+                    }
+            }
         }catch (e: Exception){
             Toast.makeText(context,"Datos incompletos, porfavor llenar",Toast.LENGTH_SHORT).show()
         }
