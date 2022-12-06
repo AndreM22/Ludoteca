@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andremachicao.ludoteca.databinding.FragmentGameDetailsBinding
 import com.andremachicao.ludoteca.viewmodel.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -25,6 +27,7 @@ class GameDetailsFragment : Fragment() {
     private val args: GameDetailsFragmentArgs by navArgs()
     private val db = Firebase.firestore
     private val storage = Firebase.storage
+    private lateinit var auth: FirebaseAuth
     private val list = mutableListOf<CarouselItem>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +39,7 @@ class GameDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        auth = Firebase.auth
         binding.gameInfo = args.gameInfo
         for (element in args.gameInfo.images){
             list.add(CarouselItem(element))
@@ -52,27 +56,29 @@ class GameDetailsFragment : Fragment() {
         }
 
         binding.buttonDeleteGame.setOnClickListener {
-            db.collection("Games").document(args.gameInfo.id).delete().addOnSuccessListener {
-                val goToMainGameList = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
-                val storageRef = storage.reference
-                val desertRef1 = storageRef.child("games/${args.gameInfo.id}/images/img_1.jpeg")
-                val desertRef2 = storageRef.child("games/${args.gameInfo.id}/images/img_2.jpeg")
-                val desertRef3 = storageRef.child("games/${args.gameInfo.id}/images/img_3.jpeg")
-                desertRef1.delete().addOnSuccessListener {
-                }.addOnFailureListener{
-                    Log.d(TAG,"El error es: $it")
-                }
-                desertRef2.delete().addOnSuccessListener {
-                }.addOnFailureListener{
-                    Log.d(TAG,"El error es: $it")
-                }
-                desertRef3.delete().addOnSuccessListener {
-                }.addOnFailureListener{
-                    Log.d(TAG,"El error es: $it")
-                }
-                Toast.makeText(context,"Se elimino el juego",Toast.LENGTH_SHORT).show()
+            auth.currentUser?.email?.let { email->
+                db.collection("users").document(email).collection("Games").document(args.gameInfo.id).delete().addOnSuccessListener {
+                    val goToMainGameList = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
+                    val storageRef = storage.reference
+                    val desertRef1 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_1.jpeg")
+                    val desertRef2 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_2.jpeg")
+                    val desertRef3 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_3.jpeg")
+                    desertRef1.delete().addOnSuccessListener {
+                    }.addOnFailureListener{ e ->
+                        Log.d(TAG,"El error es: $e")
+                    }
+                    desertRef2.delete().addOnSuccessListener {
+                    }.addOnFailureListener{ e ->
+                        Log.d(TAG,"El error es: $e")
+                    }
+                    desertRef3.delete().addOnSuccessListener {
+                    }.addOnFailureListener{ e ->
+                        Log.d(TAG,"El error es: $e")
+                    }
+                    Toast.makeText(context,"Se elimino el juego",Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(goToMainGameList)
+                    findNavController().navigate(goToMainGameList)
+                }
             }
 
         }
