@@ -7,7 +7,6 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
@@ -23,21 +22,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentAddGameBinding
 import com.andremachicao.ludoteca.game.model.Game
+import com.andremachicao.ludoteca.utils.hideKeyboard
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import org.koin.android.ext.android.bind
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.properties.Delegates
 
 class AddGameFragment: Fragment(){
     private lateinit var binding: FragmentAddGameBinding
-    private var img_count = 1
+    private var imgCount = 1
     private val db = Firebase.firestore
     private lateinit var auth: FirebaseAuth
     private var storage = Firebase.storage
@@ -46,9 +46,9 @@ class AddGameFragment: Fragment(){
 
 
     companion object{
-        private val IMAGE_CHOOSE = 1000;
-        private val PERMISSION_CODE = 1001;
-        private val CAMERA_CHOOSE = 1002;
+        const val IMAGE_CHOOSE = 1000;
+        const val PERMISSION_CODE = 1001;
+        const val CAMERA_CHOOSE = 1002;
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,22 +71,27 @@ class AddGameFragment: Fragment(){
         var state = "Seleccione un estado"
         numericalState = 0.00
         //var numericalState:Double = 0.00
-        val listStates = arrayOf("Seleccione un estado","Nuevo","Poco uso","Usado")
-        var spinnerAdapter:ArrayAdapter<String> = ArrayAdapter(view.context,android.R.layout.simple_spinner_item,listStates)
+        val listStates = arrayOf("Seleccione un estado","Usado","Poco uso","Nuevo")
+        var spinnerAdapter:ArrayAdapter<String> = ArrayAdapter(view.context,
+            R.layout.spinner_element_config,listStates)
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_elemet_list_config)
         binding.spinnerState.adapter = spinnerAdapter
         binding.spinnerState.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 state = binding.spinnerState.selectedItem.toString()
+                p1?.hideKeyboard()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 state = "Seleccione un estado"
+                p0?.hideKeyboard()
             }
 
         }
         /////////////////////////////////////////////////////
        // Parte para configurar el calendario
         binding.btDate.setOnClickListener{
+            it.hideKeyboard()
             binding.datePickerContainer.visibility= View.VISIBLE
             binding.btAddGameAccept.visibility= View.GONE
             binding.btIncreasePlayers.visibility= View.GONE
@@ -96,6 +101,8 @@ class AddGameFragment: Fragment(){
             binding.edtxPriceInput.visibility= View.GONE
             binding.edtxLocationInput.visibility = View.GONE
             binding.bolivianosInfo.visibility = View.GONE
+            binding.imageContainer.visibility = View.GONE
+            binding.spinnerState.visibility = View.GONE
         }
         binding.idDatePickerItem.setOnDateChangedListener{
             date,year,month,day ->
@@ -112,10 +119,13 @@ class AddGameFragment: Fragment(){
             binding.edtxPriceInput.visibility= View.VISIBLE
             binding.edtxLocationInput.visibility = View.VISIBLE
             binding.bolivianosInfo.visibility = View.VISIBLE
+            binding.imageContainer.visibility = View.VISIBLE
+            binding.spinnerState.visibility = View.VISIBLE
         }
 
         ///////////////////////////////////////////////////////////
         binding.btIncreasePlayers.setOnClickListener{
+            it.hideKeyboard()
             var players = 0
             if(binding.edtxPlayersInput.text.toString() == "") {
                 players = 1
@@ -128,6 +138,7 @@ class AddGameFragment: Fragment(){
 
         }
         binding.btDecreasePlayers.setOnClickListener{
+            it.hideKeyboard()
             var players = 0
             if (binding.edtxPlayersInput.text.toString() == ""){
                 binding.edtxPlayersInput.setText(players.toString())
@@ -138,7 +149,8 @@ class AddGameFragment: Fragment(){
             }
         }
         binding.btGallery.setOnClickListener {
-            if(img_count <=3){
+            it.hideKeyboard()
+            if(imgCount <=3){
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -155,7 +167,8 @@ class AddGameFragment: Fragment(){
 
         }
         binding.btTakePicture.setOnClickListener {
-            if(img_count <=3){
+            it.hideKeyboard()
+            if(imgCount <=3){
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
             }else{
@@ -164,6 +177,7 @@ class AddGameFragment: Fragment(){
 
         }
         binding.btAddGameAccept.setOnClickListener {
+            it.hideKeyboard()
             if (state != "Seleccione un estado"){
                 when(state){
                     "Nuevo" -> numericalState = 3.00
@@ -179,8 +193,13 @@ class AddGameFragment: Fragment(){
                 Toast.makeText(context,"Numero de jugadores no valido",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if(img_count ==1){
+            if(imgCount ==1){
                 Toast.makeText(context,"Porfavor registre almenos una imagen",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(binding.edtxTimeInput.text.toString() == "Fecha de fabricacion"){
+                Toast.makeText(context,"Introduzca una fecha",Toast.LENGTH_SHORT).show()
+                binding.edtxTimeInput.error = "Introduzca una fecha"
                 return@setOnClickListener
             }
 
@@ -203,11 +222,11 @@ class AddGameFragment: Fragment(){
         startActivityForResult(intent, IMAGE_CHOOSE)
     }
 
-    fun getDateFromDatePicker(): String {
+    private fun getDateFromDatePicker(): String {
         val day = binding.idDatePickerItem.dayOfMonth.toString().padStart(2,'0')
         val month = (binding.idDatePickerItem.month+1).toString().padStart(2,'0')
         val year= binding.idDatePickerItem.year.toString().padStart(4,'0')
-        return day+"/"+month+"/"+year
+        return "$day/$month/$year"
     }
 
     override fun onRequestPermissionsResult(
@@ -229,7 +248,7 @@ class AddGameFragment: Fragment(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
-            when(img_count){
+            when(imgCount){
                 1 ->{
                     binding.img1Games.setImageURI(data?.data)
                     binding.img1Games.visibility = View.VISIBLE
@@ -243,11 +262,11 @@ class AddGameFragment: Fragment(){
                     binding.img3Games.visibility = View.VISIBLE
                 }
             }
-            img_count++
+            imgCount++
 
         }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
             val imgBitMap: Bitmap? = data!!.extras!!.get("data") as Bitmap?
-            when(img_count){
+            when(imgCount){
                 1 ->{
                     binding.img1Games.setImageBitmap(imgBitMap)
                     binding.img1Games.visibility = View.VISIBLE
@@ -261,7 +280,7 @@ class AddGameFragment: Fragment(){
                     binding.img3Games.visibility = View.VISIBLE
                 }
             }
-            img_count++
+            imgCount++
 
         }
 
@@ -279,12 +298,12 @@ class AddGameFragment: Fragment(){
         bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos)
         val data = baos.toByteArray()
         var uploadTask = imageRoute.putBytes(data)
-        if(img_count == 2){
+        if(imgCount == 2){
             uploadTask.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                     uploadGame(id,listOfImages)
@@ -292,7 +311,7 @@ class AddGameFragment: Fragment(){
             }
         }
 
-        if (img_count==3){
+        if (imgCount==3){
             val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
             binding.img2Games.isDrawingCacheEnabled =true
             binding.img2Games.buildDrawingCache()
@@ -303,9 +322,9 @@ class AddGameFragment: Fragment(){
 
             uploadTask.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                 }
@@ -314,16 +333,16 @@ class AddGameFragment: Fragment(){
             var uploadTask2 = imageRoute2.putBytes(data2)
             uploadTask2.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                     uploadGame(id,listOfImages)
                 }
             }
         }
-        if (img_count==4){
+        if (imgCount==4){
             val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
             binding.img2Games.isDrawingCacheEnabled =true
             binding.img2Games.buildDrawingCache()
@@ -342,30 +361,30 @@ class AddGameFragment: Fragment(){
 
             uploadTask.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                 }
             }
 
-            var uploadTask2 = imageRoute2.putBytes(data2)
+            val uploadTask2 = imageRoute2.putBytes(data2)
             uploadTask2.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                 }
             }
-            var uploadTask3 = imageRoute3.putBytes(data3)
+            val uploadTask3 = imageRoute3.putBytes(data3)
             uploadTask3.addOnFailureListener{
 
-            }.addOnSuccessListener { taskSnapshot ->
+            }.addOnSuccessListener {
                 imageRoute3.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE","-------->>>"+it)
+                    Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
                     uploadGame(id,listOfImages)
@@ -392,11 +411,11 @@ class AddGameFragment: Fragment(){
 
             auth.currentUser?.email?.let { email ->
                 db.collection("users").document(email).collection("Games").document(id).set(game)
-                    .addOnSuccessListener { documentReference ->
+                    .addOnSuccessListener {
                         progressDialog.dismiss()
                         Log.d(TAG, "successful")
                         Toast.makeText(context,"Se guardo el nuevo juego",Toast.LENGTH_SHORT).show()
-                        var goToMainGamePage = AddGameFragmentDirections.actionAddGameFragmentToGamesFragment()
+                        val goToMainGamePage = AddGameFragmentDirections.actionAddGameFragmentToGamesFragment()
                         findNavController().navigate(goToMainGamePage)
 
                     }
@@ -407,6 +426,7 @@ class AddGameFragment: Fragment(){
                     }
             }
         }catch (e: Exception){
+            progressDialog.dismiss()
             Toast.makeText(context,"Datos incompletos, porfavor llenar",Toast.LENGTH_SHORT).show()
         }
 
