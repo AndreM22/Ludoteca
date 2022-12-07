@@ -14,163 +14,337 @@
 
         <EditText
             android:id="@+id/edtxNameGameUpdate"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Nombre"
+            android:drawableStart="@drawable/ic_game_name"
+            android:drawablePadding="10dp"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edtxStateGameUpdate"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinnerStateGameUpdate"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Estado"
-            android:inputType="numberDecimal"
+            android:dropDownWidth="match_parent"
             android:minHeight="48dp"
+            android:popupBackground="#D3D4D9"
+            app:barrierMargin="@dimen/fragment_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxNameGameUpdate" />
+            app:layout_constraintTop_toBottomOf="@+id/edtxNameGameUpdate"
+            tools:ignore="SpeakableTextPresentCheck"
+            style="@style/spinner_style"/>
 
         <EditText
             android:id="@+id/edtxLanguageInputUpdate"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
+            android:drawableStart="@drawable/ic_language_game"
+            android:drawablePadding="10dp"
             android:ems="10"
-            android:hint="Lenguage"
+            android:hint="Idioma"
             android:inputType="text"
-            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxStateGameUpdate" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerStateGameUpdate" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/image_container_update"
+            android:layout_width="350dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxLanguageInputUpdate">
+
+            <TextView
+                android:id="@+id/img_input_text_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Imágenes del juego"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/btTakePictureUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tomar foto"
+                android:backgroundTint="@color/button_add_image"
+                app:layout_constraintEnd_toStartOf="@+id/btGalleryUpdate"
+                app:layout_constraintStart_toEndOf="@id/imgGamesInputUpdate"
+                app:layout_constraintTop_toBottomOf="@id/img_input_text_update" />
+
+            <Button
+                android:id="@+id/btGalleryUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:text="Galeria"
+                android:backgroundTint="@color/button_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_input_text_update" />
+
+            <ImageView
+                android:id="@+id/imgGamesInputUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_input_text_update"
+                app:srcCompat="@drawable/ic_image_game" />
+
+            <ImageView
+                android:id="@+id/img1GamesUpdate"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/placeholder_bg"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePictureUpdate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/activities" />
+            <ImageView
+                android:id="@+id/img3GamesUpdate"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/placeholder_bg"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePictureUpdate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/activities" />
+            <ImageView
+                android:id="@+id/img2GamesUpdate"
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/placeholder_bg"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/btTakePictureUpdate"
+                app:layout_constraintEnd_toStartOf="@id/img3GamesUpdate"
+                app:layout_constraintStart_toEndOf="@id/img1GamesUpdate"
+                app:srcCompat="@drawable/activities" />
+
+            <ImageButton
+                android:id="@+id/btDeleteImg1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/img1GamesUpdate"
+                app:layout_constraintEnd_toEndOf="@+id/img1GamesUpdate"
+                app:layout_constraintStart_toStartOf="@+id/img1GamesUpdate"
+                app:layout_constraintTop_toTopOf="@+id/img1GamesUpdate"
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <ImageButton
+                android:id="@+id/btDeleteImg2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/img2GamesUpdate"
+                app:layout_constraintEnd_toEndOf="@+id/img2GamesUpdate"
+                app:layout_constraintStart_toStartOf="@+id/img2GamesUpdate"
+                app:layout_constraintTop_toTopOf="@+id/img2GamesUpdate"
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="TouchTargetSizeCheck" />
+            <ImageButton
+                android:id="@+id/btDeleteImg3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/img3GamesUpdate"
+                app:layout_constraintEnd_toEndOf="@+id/img3GamesUpdate"
+                app:layout_constraintStart_toStartOf="@+id/img3GamesUpdate"
+                app:layout_constraintTop_toTopOf="@+id/img3GamesUpdate"
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/edtxDescriptionGameUpdate"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="250dp"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Descripción"
             android:inputType="textMultiLine|textCapSentences"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxGameImageUpdate" />
+            app:layout_constraintTop_toBottomOf="@id/image_container_update" />
 
         <EditText
             android:id="@+id/edtxPlayersInputUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="Numero Jugadores"
+            android:hint="# Jugadores"
+            android:drawableStart="@drawable/ic_number_players"
+            android:drawablePadding="10dp"
             android:inputType="number"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toStartOf="@+id/btIncreasePlayersUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxDescriptionGameUpdate" />
 
-        <EditText
+        <ImageButton
+            android:id="@+id/btDecreasePlayersUpdate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/light_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxDescriptionGameUpdate"
+            app:srcCompat="@drawable/ic_decrease_players"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/btIncreasePlayersUpdate"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="12dp"
+            android:background="@color/light_red"
+            app:layout_constraintEnd_toStartOf="@+id/btDecreasePlayersUpdate"
+            app:layout_constraintTop_toBottomOf="@+id/edtxDescriptionGameUpdate"
+            app:srcCompat="@drawable/ic_increase_players"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
             android:id="@+id/edtxTimeInputUpdate"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="Fecha de creacion"
-            android:inputType="date"
-            android:minHeight="48dp"
+            android:textAlignment="textStart"
+            android:layout_marginTop="45dp"
+            android:hint="Fecha de fabricación"
+            android:textSize="18sp"
+            android:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toStartOf="@+id/btDateUpdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPlayersInputUpdate" />
 
-        <EditText
-            android:id="@+id/edtxPriceInputUpdate"
+        <ImageButton
+            android:id="@+id/btDateUpdate"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtxPlayersInputUpdate"
+            app:srcCompat="@drawable/ic_manufactored_game_date"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/date_picker_container_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_container_update"
+            android:visibility="gone">
+            <com.andremachicao.ludoteca.utils.CustomDatePicker
+                android:id="@+id/idDatePickerItemUpdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/placeholder_bg"
+                android:calendarTextColor="@color/white"
+                android:dayOfWeekTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:headerBackground="@color/dark_red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </com.andremachicao.ludoteca.utils.CustomDatePicker>
+            <Button
+                android:id="@+id/confirmDateUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Confirmar"
+                android:backgroundTint="@color/dark_red"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idDatePickerItemUpdate"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/edtxPriceInputUpdate"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
+            android:drawableStart="@drawable/ic_money"
+            android:drawablePadding="10dp"
             android:hint="Precio"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
+            app:layout_constraintEnd_toStartOf="@+id/bolivianosInfoUpdate"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxTimeInputUpdate" />
+            app:layout_constraintTop_toBottomOf="@id/btDateUpdate" />
+
+        <TextView
+            android:id="@+id/bolivianosInfoUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:minHeight="60dp"
+            android:text="Bs."
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btDateUpdate" />
 
         <EditText
             android:id="@+id/edtxLocationInputUpdate"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="30dp"
             android:ems="10"
             android:hint="Ubiacion"
             android:inputType="text"
             android:minHeight="48dp"
+            android:drawableStart ="@drawable/ic_location"
+            android:drawablePadding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtxPriceInputUpdate" />
 
-        <EditText
-            android:id="@+id/edtxGameImageUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Imagen"
-            android:inputType="text"
-            android:minHeight="48dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtxLanguageInputUpdate" />
-
-
         <Button
-            android:id="@+id/btAcceptUpdate"
+            android:id="@+id/btAddGameAcceptUpdate"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="80dp"
             android:layout_marginBottom="30dp"
-            android:text="Actualizar"
+            android:background="@drawable/button_background"
+            android:text="Añadir"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtxLocationInputUpdate"
             app:srcCompat="@drawable/button_background_2" />
-
-
-
-
-
-        <ImageView
-            android:id="@+id/imgEPAUpdate"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="38dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgEPA8Update"
-            app:srcCompat="@drawable/ic_descricion" />
-
-        <ImageView
-            android:id="@+id/imgEPA8Update"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="265dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_imagen" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
