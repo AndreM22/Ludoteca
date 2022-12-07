@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentRegisterBinding
 import com.andremachicao.ludoteca.profile.Profile
 import com.google.firebase.auth.FirebaseAuth
@@ -59,8 +58,8 @@ class RegisterFragment : Fragment() {
 
     private fun validateData(){
         email =binding.editTextRegisterEmail.text.toString().trim()
-        val lastName =binding.editTextRegisterLastName.text.toString()
-        val name = binding.editTextRegisterName.text.toString()
+        val lastName =binding.editTextRegisterLastName.text.toString().trim()
+        val name = binding.editTextRegisterName.text.toString().trim()
         pass =binding.editTextREgisterPassword.text.toString().trim()
         val confirmPass =binding.edxtConfirmPassRegisterPage.text.toString().trim()
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -87,9 +86,10 @@ class RegisterFragment : Fragment() {
             val id = UUID.randomUUID().toString()
             try{
                 val profile = Profile(
+                    id= id,
                     names = name,
                     lastnames = lastName,
-                    email= email,
+                    email = email,
                     starts = 1.00
                 )
                 db.collection("users").document(email)
