@@ -114,18 +114,47 @@ class GameUpdateFragment:Fragment() {
             binding.img1GamesUpdate.visibility= View.GONE
             binding.btDeleteImg1.visibility = View.GONE
             deletedImages.add(1)
+            /*
+            val storageRef = storage.reference
+            val desertRef1 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_1.jpeg")
+            desertRef1.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+            list.remove(args.gameInfo.images[0])
+             */
+
         }
         binding.btDeleteImg2.setOnClickListener {
             imgCount -=1
             binding.img2GamesUpdate.visibility = View.GONE
             binding.btDeleteImg2.visibility = View.GONE
             deletedImages.add(2)
+            /*
+            val storageRef = storage.reference
+            val desertRef2 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_2.jpeg")
+            desertRef2.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+            list.remove(args.gameInfo.images[1])
+
+             */
         }
         binding.btDeleteImg3.setOnClickListener {
             imgCount -= 1
             binding.img3GamesUpdate.visibility = View.GONE
             binding.btDeleteImg3.visibility = View.GONE
             deletedImages.add(3)
+            /*
+            val storageRef = storage.reference
+            val desertRef3 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_3.jpeg")
+            desertRef3.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+            list.remove(args.gameInfo.images[2])
+            */
         }
 
 
