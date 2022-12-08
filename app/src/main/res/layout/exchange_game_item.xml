@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="gameExchange"
+            type="com.andremachicao.ludoteca.game.model.Game" />
+        <variable
+            name="profileExchange"
+            type="com.andremachicao.ludoteca.profile.Profile" />
+    </data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/idNameGameItemExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@{gameExchange.name}"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Nombre_Juego" />
+
+            <ImageView
+                android:id="@+id/imgGameItemExchange"
+                android:layout_width="140dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                srcUrl="@{gameExchange.images[0]}"
+                tools:srcCompat="@drawable/activities" />
+
+            <ImageView
+                android:id="@+id/idIcLocationItemExchange"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idStateItemExchange"
+                app:srcCompat="@drawable/ic_location" />
+
+            <TextView
+                android:id="@+id/idLocationItemExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@{gameExchange.location}"
+                app:layout_constraintStart_toEndOf="@+id/idIcLocationItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idStateItemExchange"
+                tools:text="La-Paz" />
+
+            <TextView
+                android:id="@+id/idPriceItemExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="25dp"
+                android:text="@{String.valueOf(gameExchange.price)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Price Bs" />
+
+            <ImageView
+                android:id="@+id/idIcPriceItemExchange"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/idPriceItemExchange"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_price" />
+
+            <TextView
+                android:id="@+id/idStateItemExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="@{String.valueOf(gameExchange.state)}"
+                tools:text="3.00"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idNameGameItemExchange" />
+
+            <TextView
+                android:id="@+id/stateLabelItemExchange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="/3"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/idStateItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idNameGameItemExchange" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
