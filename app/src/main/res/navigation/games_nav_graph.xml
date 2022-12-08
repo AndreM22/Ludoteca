@@ -81,9 +81,24 @@
         <action
             android:id="@+id/action_myProfileFragment_to_loginRegisterActivity"
             app:destination="@id/loginRegisterActivity" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <activity
         android:id="@+id/loginRegisterActivity"
         android:name="com.andremachicao.ludoteca.loginRegister.LoginRegisterActivity"
         android:label="LoginRegisterActivity" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.andremachicao.ludoteca.profile.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile">
+        <action
+            android:id="@+id/action_editProfileFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+        <argument
+            android:name="profileToUpdate"
+            app:argType="com.andremachicao.ludoteca.profile.Profile" />
+    </fragment>
 </navigation>

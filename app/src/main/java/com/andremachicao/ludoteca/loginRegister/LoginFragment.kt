@@ -15,8 +15,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentLoginBinding
+import com.andremachicao.ludoteca.profile.Profile
+import com.andremachicao.ludoteca.sharedPreferences.InitApp.Companion.prefs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -24,6 +27,7 @@ class LoginFragment : Fragment() {
 private lateinit var binding: FragmentLoginBinding
 private lateinit var auth: FirebaseAuth
 private lateinit var progressDialog: ProgressDialog
+private val db = Firebase.firestore
 private var email =""
 private var pass =""
 
@@ -69,15 +73,43 @@ private var pass =""
     private fun firebaseLogin(){
         progressDialog.show()
         auth.signInWithEmailAndPassword(email,pass).addOnSuccessListener {
-            progressDialog.dismiss()
             val user = auth.currentUser
             val email = user!!.email
+            loadInfo()
+            progressDialog.dismiss()
             Toast.makeText(context,"Ingreso con: $email",Toast.LENGTH_SHORT).show()
             val goToMain = LoginFragmentDirections.actionLoginFragmentToMainActivity()
             findNavController().navigate(goToMain)
         }.addOnFailureListener{ e ->
             progressDialog.dismiss()
             Toast.makeText(context,"No se pudo ingresar debido a ${e.message}",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun loadInfo(){
+        //Tener consistnecia de datos, tener base de datos del celular
+        auth.currentUser?.email?.let {
+            db.collection("users").document(it).collection("Profile").get().addOnSuccessListener { result ->
+                val profileInfo = mutableListOf<Profile>()
+                for(document in result){
+                    val profile = Profile(
+                        id = document.data["id"] as String,
+                        names = document.data["names"] as String,
+                        lastnames = document.data["lastnames"] as String,
+                        email = document.data["email"] as String,
+                        stars = document.data["stars"] as Double,
+                        image = document.data["image"] as String
+
+                    )
+                    profileInfo.add(profile)
+                }
+                prefs.saveId(profileInfo[0].id)
+                prefs.saveName(profileInfo[0].names)
+                prefs.saveLastNames(profileInfo[0].lastnames)
+                prefs.saveEmail(profileInfo[0].email)
+                prefs.saveStar(profileInfo[0].stars)
+                prefs.saveImage(profileInfo[0].image)
+            }
         }
     }
 
