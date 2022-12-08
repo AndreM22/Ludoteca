@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentMyProfileBinding
+import com.andremachicao.ludoteca.sharedPreferences.InitApp.Companion.prefs
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -29,36 +32,49 @@ class MyProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = Firebase.auth
-        loadInfo()
+        loadProfilePage()
+        loadUserPhoto()
         binding.MyProfileLogOutButton.setOnClickListener{
             auth.signOut()
+            prefs.wipe()
             val goToLoginPage = MyProfileFragmentDirections.actionMyProfileFragmentToLoginRegisterActivity()
             findNavController().navigate(goToLoginPage)
         }
-    }
-
-    private fun loadInfo(){
-        //Tener consistnecia de datos, tener base de datos del celular
-        auth.currentUser?.email?.let {
-            db.collection("users").document(it).collection("Profile").get().addOnSuccessListener { result ->
-                val profileInfo = mutableListOf<Profile>()
-                for(document in result){
-                    val profile = Profile(
-                        id = document.data["id"] as String,
-                        names = document.data["names"] as String,
-                        lastnames = document.data["lastnames"] as String,
-                        email = document.data["email"] as String,
-                        starts = document.data["starts"] as Double
-
-                    )
-                    profileInfo.add(profile)
-                }
-                if (profileInfo.isNotEmpty()){
-                    binding.profileInfo = profileInfo[0]
-                    val completeName = "${profileInfo[0].names} ${profileInfo[0].lastnames}"
-                    binding.MyProfileName.text = completeName
-                }
+        binding.MyProfileEditProfileButton.setOnClickListener{
+            val goToUpdatePage = MyProfileFragmentDirections.actionMyProfileFragmentToEditProfileFragment(loadInfo())
+            findNavController().navigate(goToUpdatePage)
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
             }
-        }
+        })
+    }
+
+    private fun loadInfo(): Profile {
+        return Profile(
+            id = prefs.getId(),
+            names = prefs.getName(),
+            lastnames = prefs.getLastNames(),
+            email = prefs.getEmail(),
+            stars = prefs.getStars().toDouble(),
+            image = prefs.getImage()
+        )
+    }
+
+    private fun loadProfilePage(){
+        binding.profileInfo = loadInfo()
+        val completeName = "${loadInfo().names} ${loadInfo().lastnames}"
+        binding.MyProfileName.text = completeName
+    }
+    private fun loadUserPhoto(){
+        if(prefs.getImage() != ""){
+            Glide.with(binding.MyProfileImage)
+                .load(prefs.getImage())
+                .into(binding.MyProfileImage)
         }
     }
+
+}
+
+

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.andremachicao.ludoteca.databinding.FragmentRegisterBinding
 import com.andremachicao.ludoteca.profile.Profile
+import com.andremachicao.ludoteca.sharedPreferences.InitApp.Companion.prefs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -86,16 +87,23 @@ class RegisterFragment : Fragment() {
             val id = UUID.randomUUID().toString()
             try{
                 val profile = Profile(
-                    id= id,
+                    id = id,
                     names = name,
                     lastnames = lastName,
                     email = email,
-                    starts = 1.00
+                    stars = 1.00,
+                    image = "",
                 )
                 db.collection("users").document(email)
                     .collection("Profile").document(id).set(profile)
                     .addOnSuccessListener {
                         progressDialog.dismiss()
+                        prefs.saveId(profile.id)
+                        prefs.saveName(profile.names)
+                        prefs.saveLastNames(profile.lastnames)
+                        prefs.saveEmail(profile.email)
+                        prefs.saveStar(profile.stars)
+                        prefs.saveImage(profile.image)
                         Toast.makeText(context,"Se registro con el email: $email",Toast.LENGTH_SHORT).show()
                         val goToMainPage = RegisterFragmentDirections.actionRegisterFragmentToMainActivity()
                         findNavController().navigate(goToMainPage)

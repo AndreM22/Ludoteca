@@ -7,5 +7,6 @@ data class Profile(
     val names: String,
     val lastnames: String,
     val email: String,
-    val starts: Double
+    val stars: Double,
+    val image: String
 ): Serializable
