@@ -4,11 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="gameExchange"
-            type="com.andremachicao.ludoteca.game.model.Game" />
-        <variable
-            name="profileExchange"
-            type="com.andremachicao.ludoteca.profile.Profile" />
+            name="exchangeInfo"
+            type="com.andremachicao.ludoteca.exchange.Exchange" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +20,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:text="@{gameExchange.name}"
-                android:textSize="18sp"
+                android:text="@{exchangeInfo.gamename}"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Nombre_Juego" />
@@ -34,22 +32,20 @@
                 android:layout_width="140dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                srcUrl="@{gameExchange.images[0]}"
+                srcUrl="@{exchangeInfo.gameimages[0]}"
                 tools:srcCompat="@drawable/activities" />
 
             <ImageView
                 android:id="@+id/idIcLocationItemExchange"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
-                app:layout_constraintTop_toBottomOf="@+id/idStateItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idIcPriceItemExchange"
                 app:srcCompat="@drawable/ic_location" />
 
             <TextView
@@ -57,32 +53,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:text="@{gameExchange.location}"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"
+                android:text="@{exchangeInfo.gamelocation}"
                 app:layout_constraintStart_toEndOf="@+id/idIcLocationItemExchange"
-                app:layout_constraintTop_toBottomOf="@+id/idStateItemExchange"
+                app:layout_constraintTop_toBottomOf="@+id/idIcPriceItemExchange"
                 tools:text="La-Paz" />
 
             <TextView
                 android:id="@+id/idPriceItemExchange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="25dp"
-                android:text="@{String.valueOf(gameExchange.price)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Price Bs" />
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="5dp"
+                android:textSize="18sp"
+                android:text="@{String.valueOf(exchangeInfo.gameprice)}"
+                app:layout_constraintEnd_toStartOf="@id/bsInfoExchangeItem"
+                app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange"
+                tools:text="100.00" />
 
             <ImageView
                 android:id="@+id/idIcPriceItemExchange"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="7dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/idPriceItemExchange"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_price" />
+                app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange"
+                app:srcCompat="@drawable/ic_exchange" />
 
             <TextView
                 android:id="@+id/idStateItemExchange"
@@ -90,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:text="@{String.valueOf(gameExchange.state)}"
+                android:textSize="18sp"
+                android:text="@{String.valueOf(exchangeInfo.gamestate)}"
                 tools:text="3.00"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItemExchange"
@@ -102,9 +101,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="/3"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/idStateItemExchange"
                 app:layout_constraintTop_toBottomOf="@+id/idNameGameItemExchange" />
+
+            <TextView
+                android:id="@+id/bsInfoExchangeItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="18sp"
+                android:text="Bs."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgUserExchangeItem"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                srcUrl="@{exchangeInfo.profileimage}"
+                app:srcCompat="@drawable/user"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornersSize"
+
+            app:layout_constraintTop_toBottomOf="@id/idIcLocationItemExchange"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@{exchangeInfo.profilenames}"
+                tools:text="Manuel Alejandro Valenzuela Delgadillo"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/imgUserExchangeItem"
+                app:layout_constraintTop_toBottomOf="@+id/idIcLocationItemExchange" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

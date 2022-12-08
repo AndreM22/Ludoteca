@@ -28,11 +28,8 @@ class GameListAdapter:RecyclerView.Adapter<ListOfGamesViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ListOfGamesViewHolder, position: Int) {
-        Log.d(ContentValues.TAG, "Entro el holder ,position: $position")
-        Log.d(ContentValues.TAG, "size : $itemCount")
         holder.bind(gameList[position])
         holder.binding.root.setOnClickListener {
-            Log.d(ContentValues.TAG, "Se presiono el juego ${gameList[position].name}")
             onGameItemClickListener?.invoke(gameList[position])
         }
 

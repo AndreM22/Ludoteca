@@ -9,4 +9,5 @@ data class Profile(
     val email: String,
     val stars: Double,
     val image: String
+
 ): Serializable

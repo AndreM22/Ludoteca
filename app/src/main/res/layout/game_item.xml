@@ -40,12 +40,12 @@
 
             <ImageView
                 android:id="@+id/idIcLocationItem"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItem"
-                app:layout_constraintTop_toBottomOf="@+id/idStateItem"
+                app:layout_constraintTop_toBottomOf="@+id/idIcPriceItem"
                 app:srcCompat="@drawable/ic_location" />
 
             <TextView
@@ -53,32 +53,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"
                 android:text="@{gameInfo.location}"
                 app:layout_constraintStart_toEndOf="@+id/idIcLocationItem"
-                app:layout_constraintTop_toBottomOf="@+id/idStateItem"
+                app:layout_constraintTop_toBottomOf="@+id/idIcPriceItem"
                 tools:text="La-Paz" />
 
             <TextView
                 android:id="@+id/idPriceItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="5dp"
+                android:textSize="18dp"
                 android:text="@{String.valueOf(gameInfo.price)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Price Bs" />
+                app:layout_constraintEnd_toStartOf="@id/bsInfoGameItem"
+                app:layout_constraintTop_toBottomOf="@id/idNameGameItem"
+                tools:text="1000000.00" />
 
             <ImageView
                 android:id="@+id/idIcPriceItem"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="7dp"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/idPriceItem"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_price" />
+                app:layout_constraintTop_toBottomOf="@id/idNameGameItem"
+                app:srcCompat="@drawable/ic_money" />
 
             <TextView
                 android:id="@+id/idStateItem"
@@ -88,6 +90,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@{String.valueOf(gameInfo.state)}"
                 tools:text="3.00"
+                android:textSize="18dp"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toEndOf="@+id/imgGameItem"
                 app:layout_constraintTop_toBottomOf="@+id/idNameGameItem" />
@@ -98,8 +101,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="/3"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/idStateItem"
+                app:layout_constraintTop_toBottomOf="@+id/idNameGameItem" />
+
+            <TextView
+                android:id="@+id/bsInfoGameItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="18sp"
+                android:text="Bs."
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/idNameGameItem" />
 
 

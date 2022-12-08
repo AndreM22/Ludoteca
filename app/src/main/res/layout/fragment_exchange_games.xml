@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#D57A66">
+
+    <ImageView
+        android:id="@+id/btSearchGameExchange"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/button_background" />
+
+
+    <EditText
+        android:id="@+id/txTextSearchGameExchange"
+        android:layout_width="320dp"
+        android:layout_height="0dp"
+        android:hint="Buscar"
+        android:textSize="24sp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btSearchGameExchange"
+        app:layout_constraintEnd_toEndOf="@+id/btSearchGameExchange"
+        app:layout_constraintStart_toStartOf="@+id/btSearchGameExchange"
+        app:layout_constraintTop_toTopOf="@+id/btSearchGameExchange" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSearchSectionExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeftExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRightExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExchangeList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineFinalExchange"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRightExchange"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeftExchange"
+        app:layout_constraintTop_toTopOf="@+id/guidelineSearchSectionExchange"
+        tools:listitem="@layout/exchange_game_item" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineFinalExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <Button
+        android:id="@+id/btAddExchange"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:text="Intercambiar Juego"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRightExchange"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeftExchange"
+        app:layout_constraintTop_toBottomOf="@+id/rvExchangeList"
+        app:srcCompat="@drawable/button_background_2" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
