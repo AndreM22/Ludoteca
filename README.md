@@ -31,7 +31,7 @@ La segunda opción de instalación es mediante la implementación de GitHubActio
 
 1. Dirigirse a la pestaña de actions dentro de este repositorio.
 2. En el apartado de la izquierda cambiar de pestaña a "Android CI"
-3. En el listado de workflows seleccionar el titulado "Update Gradle" que contiene un simbolo check de color verde.
+3. En el listado de workflows seleccionar el elemento más reciente que contega un simbolo check de color verde.
 4. Al final de la página aparecerá el símbolo de un cubo, seguido de la etiqueta app.
 5. Hacer click en app, descargará el archivo APK a nuestro dispositivo, desde el que podremos instalarlo y empezar a usarlo.
 
