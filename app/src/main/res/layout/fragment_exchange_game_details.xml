@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="gameExInfo"
+            type="com.andremachicao.ludoteca.exchange.Exchange" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollInfoGamePage"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_red">
+
+
+            <ImageView
+                android:id="@+id/infoGameContainerExchangeDetails"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:layout_marginBottom="7dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/button_background" />
+
+            <TextView
+                android:id="@+id/gameNameExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@{gameExInfo.gamename}"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintTop_toTopOf="@+id/infoGameContainerExchangeDetails"
+                tools:text="Catán" />
+
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/carouselExchangeDetails"
+                android:layout_width="330dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintTop_toBottomOf="@id/gameNameExchangeDetails"/>
+
+
+            <TextView
+                android:id="@+id/stateLabelnfoExchangePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginStart="45dp"
+                android:text="Estado: "
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/gamePriceExchangeDetails"
+                app:layout_constraintTop_toBottomOf="@+id/carouselExchangeDetails" />
+            <TextView
+                android:id="@+id/stateInfoExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{String.valueOf(gameExInfo.gamestate)}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/carouselExchangeDetails"
+                app:layout_constraintStart_toEndOf="@id/stateLabelnfoExchangePage"
+                tools:text="3.00" />
+
+            <TextView
+                android:id="@+id/stateTenExchangePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginStart="5dp"
+                android:text="/3"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/carouselExchangeDetails"
+                app:layout_constraintStart_toEndOf="@+id/stateInfoExchangeDetails" />
+
+            <ImageView
+                android:id="@+id/priceLabelInfoExchangePage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_money"
+                app:layout_constraintTop_toBottomOf="@id/carouselExchangeDetails"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"/>
+
+            <TextView
+                android:id="@+id/gamePriceExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="28dp"
+                android:text="@{String.valueOf(gameExInfo.gameprice)}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/carouselExchangeDetails"
+                app:layout_constraintStart_toEndOf="@id/priceLabelInfoExchangePage"
+                tools:text="7777.77" />
+
+            <TextView
+                android:id="@+id/bolivianosInfoExchangePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="28dp"
+                android:text="Bs."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/carouselExchangeDetails"
+                app:layout_constraintStart_toEndOf="@+id/gamePriceExchangeDetails" />
+
+            <ImageView
+                android:id="@+id/labelPlayersExchangeDetails"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_number_players"
+                app:layout_constraintTop_toBottomOf="@id/priceLabelInfoExchangePage"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainerExchangeDetails" />
+
+            <TextView
+                android:id="@+id/playersDataExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:text="@{String.valueOf(gameExInfo.gameplayers)}"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/gamePriceExchangeDetails"
+                app:layout_constraintStart_toEndOf="@+id/labelPlayersExchangeDetails"
+                tools:text="16" />
+
+            <ImageView
+                android:id="@+id/languageLabelExchangeDetails"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_language_game"
+                app:layout_constraintTop_toBottomOf="@+id/priceLabelInfoExchangePage"
+                app:layout_constraintStart_toEndOf="@id/gamePriceExchangeDetails" />
+
+            <TextView
+                android:id="@+id/languageDataExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="24dp"
+                android:text="@{gameExInfo.gamelanguage}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/priceLabelInfoExchangePage"
+                app:layout_constraintStart_toEndOf="@+id/languageLabelExchangeDetails"
+                tools:text="Espaniol" />
+
+            <ImageView
+                android:id="@+id/timeLabelExchangeDetails"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_manufactored_game_date"
+                app:layout_constraintTop_toBottomOf="@+id/languageLabelExchangeDetails"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainerExchangeDetails" />
+
+            <TextView
+                android:id="@+id/timeDataExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="36dp"
+                android:text="@{gameExInfo.gametime}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/languageDataExchangeDetails"
+                app:layout_constraintStart_toEndOf="@id/timeLabelExchangeDetails"
+                tools:text="20/11/2022" />
+
+            <ImageView
+                android:id="@+id/locationLabelExchangeDetails"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintTop_toBottomOf="@id/languageLabelExchangeDetails"
+                app:layout_constraintStart_toEndOf="@id/timeDataExchangeDetails" />
+
+
+            <TextView
+                android:id="@+id/locationDataExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="32dp"
+                android:text="@{gameExInfo.gamelocation}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/languageDataExchangeDetails"
+                app:layout_constraintStart_toEndOf="@+id/locationLabelExchangeDetails"
+                tools:text="La Paz" />
+
+            <TextView
+                android:id="@+id/descriptionLabelInfoExchangePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Descripción"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintTop_toBottomOf="@id/locationLabelExchangeDetails" />
+
+
+            <TextView
+                android:id="@+id/descriptionDataInfoExchangePage"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="@{gameExInfo.gamedescription}"
+                android:textSize="16sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintTop_toBottomOf="@id/descriptionLabelInfoExchangePage"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainerExchangeDetails"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Eget magna fermentum iaculis eu non diam. Fermentum posuere urna nec tincidunt praesent semper feugiat. Nisi vitae suscipit tellus mauris a diam maecenas." />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerUserInfoPageDetailsExchange"
+                android:layout_width="350dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@id/descriptionDataInfoExchangePage"
+                app:layout_constraintEnd_toEndOf="@+id/infoGameContainerExchangeDetails"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainerExchangeDetails"
+                android:background="@color/light_red">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgUserExchangeDetails"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/user"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornersSize"/>
+
+                <TextView
+                    android:id="@+id/txNameUserDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{gameExInfo.profilenames}"
+                    android:textSize="18sp"
+                    tools:text="Manuel Alejandro Valenzuela Delgadillo"
+                    app:layout_constraintTop_toBottomOf="@id/imgUserExchangeDetails"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+                <Button
+                    android:id="@+id/btUpdateGame"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Comunicarse con el vendedor"
+                    android:textSize="16sp"
+                    app:srcCompat="@drawable/button_background_2"
+                    app:layout_constraintTop_toBottomOf="@id/txNameUserDetails"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

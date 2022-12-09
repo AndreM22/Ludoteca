@@ -101,4 +101,13 @@
             android:name="profileToUpdate"
             app:argType="com.andremachicao.ludoteca.profile.Profile" />
     </fragment>
+    <fragment
+        android:id="@+id/exchangeMainFragment"
+        android:name="com.andremachicao.ludoteca.exchange.ExchangeMainFragment"
+        android:label="ExchangeMainFragment"
+        tools:layout="@layout/fragment_exchange_games">
+        <action
+            android:id="@+id/action_exchangeMainFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
 </navigation>

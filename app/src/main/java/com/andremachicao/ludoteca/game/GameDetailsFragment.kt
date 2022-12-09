@@ -82,6 +82,9 @@ class GameDetailsFragment : Fragment() {
             }
 
         }
+        binding.btExchangeDetailsGamePage.setOnClickListener {
+
+        }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

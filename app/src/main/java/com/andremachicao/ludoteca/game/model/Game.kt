@@ -12,4 +12,5 @@ data class Game(
     val time: String,
     val price: Double,
     val location:String,
-    val images:List<String>): Serializable
+    val images:List<String>,
+    val exchange: Boolean ): Serializable

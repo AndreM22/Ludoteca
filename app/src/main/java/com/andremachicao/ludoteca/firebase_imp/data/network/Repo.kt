@@ -31,7 +31,8 @@ class Repo {
                         time = document.data["time"] as String,
                         price = document.data["price"] as Double,
                         location = document.data["location"] as String,
-                        images = document.data["images"] as List<String>)
+                        images = document.data["images"] as List<String>,
+                        exchange = document.data["exchange"] as Boolean)
                     listData.add(game)
                 }
                 mutableData.value = listData
