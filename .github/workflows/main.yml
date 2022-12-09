@@ -13,7 +13,7 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v3.8.0
         with:
-          java-version: 1.8
+          java-version: 11
           distribution: 'temurin'
       - name: Build with Gradle
         run: ./gradlew build 
