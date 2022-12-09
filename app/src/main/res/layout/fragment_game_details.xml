@@ -277,6 +277,20 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
                 app:srcCompat="@drawable/button_background_2" />
+            <Button
+                android:id="@+id/btExchangeDetailsGamePage"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/button_gallery"
+                android:text="Intercambiar Juego"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/buttonDeleteGame"
+                app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
 
 
 

@@ -407,7 +407,8 @@ class AddGameFragment: Fragment(){
                 time = binding.edtxTimeInput.text.toString(),
                 price = binding.edtxPriceInput.text.toString().toDouble(),
                 location = binding.edtxLocationInput.text.toString(),
-                images = images )
+                images = images,
+                exchange = false)
 
             auth.currentUser?.email?.let { email ->
                 db.collection("users").document(email).collection("Games").document(id).set(game)

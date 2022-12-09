@@ -438,7 +438,8 @@ class GameUpdateFragment:Fragment() {
                 "time" to binding.edtxTimeInputUpdate.text.toString(),
                 "price" to binding.edtxPriceInputUpdate.text.toString().toDouble(),
                 "location" to binding.edtxLocationInputUpdate.text.toString(),
-                "images" to images
+                "images" to images,
+                "exchange" to args.gameInfo.exchange
             )
 
             auth.currentUser?.email?.let {
