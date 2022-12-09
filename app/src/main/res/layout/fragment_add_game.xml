@@ -164,7 +164,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_container"
+            app:layout_constraintTop_toBottomOf="@id/edtxPlayersInput"
             android:visibility="gone">
             <com.andremachicao.ludoteca.utils.CustomDatePicker
                 android:id="@+id/idDatePickerItem"

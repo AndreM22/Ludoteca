@@ -103,6 +103,7 @@ class AddGameFragment: Fragment(){
             binding.bolivianosInfo.visibility = View.GONE
             binding.imageContainer.visibility = View.GONE
             binding.spinnerState.visibility = View.GONE
+            binding.edtxDescriptionGame.visibility = View.GONE
         }
         binding.idDatePickerItem.setOnDateChangedListener{
             date,year,month,day ->
@@ -121,6 +122,7 @@ class AddGameFragment: Fragment(){
             binding.bolivianosInfo.visibility = View.VISIBLE
             binding.imageContainer.visibility = View.VISIBLE
             binding.spinnerState.visibility = View.VISIBLE
+            binding.edtxDescriptionGame.visibility = View.VISIBLE
         }
 
         ///////////////////////////////////////////////////////////
@@ -199,7 +201,6 @@ class AddGameFragment: Fragment(){
             }
             if(binding.edtxTimeInput.text.toString() == "Fecha de fabricacion"){
                 Toast.makeText(context,"Introduzca una fecha",Toast.LENGTH_SHORT).show()
-                binding.edtxTimeInput.error = "Introduzca una fecha"
                 return@setOnClickListener
             }
 
