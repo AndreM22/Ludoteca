@@ -1,6 +1,8 @@
 package com.andremachicao.ludoteca.exchange
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andremachicao.ludoteca.databinding.FragmentExchangeGamesBinding
 import com.andremachicao.ludoteca.game.GamesFragmentDirections
+import com.andremachicao.ludoteca.utils.UiState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExchangeMainFragment: Fragment() {
 
     private lateinit var binding: FragmentExchangeGamesBinding
@@ -40,8 +45,21 @@ class ExchangeMainFragment: Fragment() {
         //    listOfGamesAdapter.addAll(it)
         //})
         exchangeViewModel.getExGames()
-        exchangeViewModel.gameEx.observe(viewLifecycleOwner){
+        exchangeViewModel.gameEx.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is UiState.Loading ->{
+                    Log.e(TAG,"Loading")
+                }
+                is UiState.Failure ->{
+                    Log.e(TAG,state.error.toString())
+                }
+                is UiState.Success ->{
+                    state.data.forEach{
+                        Log.e(TAG, it.toString())
+                    }
 
+                }
+            }
         }
 
         listOfExchangesAdapter.setOnExchangeClickListener {
