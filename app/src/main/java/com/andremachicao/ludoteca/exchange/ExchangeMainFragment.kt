@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ class ExchangeMainFragment: Fragment() {
 
     private lateinit var binding: FragmentExchangeGamesBinding
     private val listOfExchangesAdapter = ExchangeListAdapter()
+    private val exchangeViewModel: ExchangeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +39,10 @@ class ExchangeMainFragment: Fragment() {
         //viewModel.fetchGamesData().observe(viewLifecycleOwner, {
         //    listOfGamesAdapter.addAll(it)
         //})
+        exchangeViewModel.getExGames()
+        exchangeViewModel.gameEx.observe(viewLifecycleOwner){
+
+        }
 
         listOfExchangesAdapter.setOnExchangeClickListener {
             Toast.makeText(context,"El nombre del juego es: ${it.gamename}",Toast.LENGTH_SHORT).show()

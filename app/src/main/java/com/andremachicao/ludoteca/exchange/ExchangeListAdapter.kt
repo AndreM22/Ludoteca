@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andremachicao.ludoteca.databinding.ExchangeGameItemBinding
+import com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange
 
 class ExchangeListAdapter:RecyclerView.Adapter<ListOfGamesExchangeViewHolder>(){
     private val exchangeList: MutableList<Exchange> = mutableListOf()
-    private var onExchangeItemClickListener:((exchange:Exchange)->Unit)? = null
+    private var onExchangeItemClickListener:((exchange: Exchange)->Unit)? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun addAll(newElementList:List<Exchange>){
@@ -32,14 +33,14 @@ class ExchangeListAdapter:RecyclerView.Adapter<ListOfGamesExchangeViewHolder>(){
         return exchangeList.size
     }
 
-    fun setOnExchangeClickListener(onExchangeItemClickListener:((exchange:Exchange)->Unit)?){
+    fun setOnExchangeClickListener(onExchangeItemClickListener:((exchange: Exchange)->Unit)?){
         this.onExchangeItemClickListener=onExchangeItemClickListener
     }
 
 }
 
 class ListOfGamesExchangeViewHolder(val binding: ExchangeGameItemBinding):RecyclerView.ViewHolder(binding.root){
-    fun bind(exchange:Exchange){
+    fun bind(exchange: Exchange){
         binding.exchangeInfo = exchange
     }
 

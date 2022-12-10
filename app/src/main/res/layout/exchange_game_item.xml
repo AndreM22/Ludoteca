@@ -5,7 +5,7 @@
     <data>
         <variable
             name="exchangeInfo"
-            type="com.andremachicao.ludoteca.exchange.Exchange" />
+            type="com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout

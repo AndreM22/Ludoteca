@@ -1,10 +1,11 @@
-package com.andremachicao.ludoteca.exchange
+package com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model
 
 import java.io.Serializable
 
 data class Exchange(
     val id:String,
-    var gameid: String,
+    val exchangetype:String,
+    val gameid: String,
     val gamename: String,
     val gamestate: Double,
     val gamelanguage: String,

@@ -6,13 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentGameDetailsBinding
+import com.andremachicao.ludoteca.utils.hideKeyboard
 import com.andremachicao.ludoteca.viewmodel.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -40,6 +44,24 @@ class GameDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         auth = Firebase.auth
+        //Opciones de intercambio
+        var exchangeType = "Seleccione un tipo"
+        val listExchangeTypes = arrayOf("Seleccione un tipo","Ambos","Solo intercambio","Solo venta")
+        var spinnerAdapter:ArrayAdapter<String> = ArrayAdapter(view.context, R.layout.spinner_element_config,listExchangeTypes)
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_elemet_list_config)
+        binding.spinnerTypeExchangeDetailsGame.adapter = spinnerAdapter
+        binding.spinnerTypeExchangeDetailsGame.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                exchangeType = binding.spinnerTypeExchangeDetailsGame.selectedItem.toString()
+                p1?.hideKeyboard()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                exchangeType = "Seleccione un tipo"
+                p0?.hideKeyboard()
+            }
+
+        }
         binding.gameInfo = args.gameInfo
         for (element in args.gameInfo.images){
             list.add(CarouselItem(element))
@@ -83,7 +105,7 @@ class GameDetailsFragment : Fragment() {
 
         }
         binding.btExchangeDetailsGamePage.setOnClickListener {
-
+            Toast.makeText(context, exchangeType, Toast.LENGTH_SHORT).show()
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
