@@ -5,5 +5,6 @@ import com.andremachicao.ludoteca.utils.UiState
 
 interface GameExRepository {
 
-    fun getExGames(): UiState<List<Exchange>>
+    fun getExGames(result:(UiState<List<Exchange>>)->Unit)
+    fun addExchange(exchange: Exchange,result:(UiState<String>) ->Unit)
 }

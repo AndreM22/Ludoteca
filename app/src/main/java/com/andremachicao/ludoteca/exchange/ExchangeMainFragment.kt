@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andremachicao.ludoteca.databinding.FragmentExchangeGamesBinding
 import com.andremachicao.ludoteca.game.GamesFragmentDirections
 import com.andremachicao.ludoteca.utils.UiState
+import com.andremachicao.ludoteca.utils.hide
+import com.andremachicao.ludoteca.utils.show
+import com.andremachicao.ludoteca.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +33,7 @@ class ExchangeMainFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentExchangeGamesBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -41,22 +44,19 @@ class ExchangeMainFragment: Fragment() {
         binding.rvExchangeList.layoutManager =layoutManager
         val decorationItem= DividerItemDecoration(context,layoutManager.orientation)
         binding.rvExchangeList.addItemDecoration(decorationItem)
-        //viewModel.fetchGamesData().observe(viewLifecycleOwner, {
-        //    listOfGamesAdapter.addAll(it)
-        //})
         exchangeViewModel.getExGames()
         exchangeViewModel.gameEx.observe(viewLifecycleOwner){ state ->
             when(state){
                 is UiState.Loading ->{
-                    Log.e(TAG,"Loading")
+                    binding.progressBarExchangeMain.show()
                 }
                 is UiState.Failure ->{
-                    Log.e(TAG,state.error.toString())
+                    binding.progressBarExchangeMain.hide()
+                    toast(state.error)
                 }
                 is UiState.Success ->{
-                    state.data.forEach{
-                        Log.e(TAG, it.toString())
-                    }
+                    binding.progressBarExchangeMain.hide()
+                    listOfExchangesAdapter.addAll(state.data.toMutableList())
 
                 }
             }

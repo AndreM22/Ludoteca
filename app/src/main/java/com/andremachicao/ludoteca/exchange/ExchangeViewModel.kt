@@ -1,6 +1,5 @@
 package com.andremachicao.ludoteca.exchange
 
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,14 +16,22 @@ class ExchangeViewModel @Inject constructor(
     private val _gamesEx = MutableLiveData<UiState<List<Exchange>>>()
     val gameEx:LiveData<UiState<List<Exchange>>>
         get() = _gamesEx
-    
+
+    private val _addGamesEx = MutableLiveData<UiState<String>>()
+    val addGamesEx:LiveData<UiState<String>>
+        get() = _addGamesEx
 
     fun getExGames(){
         _gamesEx.value = UiState.Loading
-        android.os.Handler(Looper.getMainLooper()).postDelayed({
-            _gamesEx.value = repository.getExGames()
-        },2000)
+        repository.getExGames { _gamesEx.value = it }
 
+    }
+
+    fun addExchange(exchange: Exchange){
+        _addGamesEx.value = UiState.Loading
+        repository.addExchange(exchange){
+            _addGamesEx.value = it
+        }
     }
 
 }
