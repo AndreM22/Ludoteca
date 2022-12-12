@@ -14,6 +14,8 @@ class GameExRepositoryImp(
             .addOnSuccessListener {
                 val listExchanges = arrayListOf<Exchange>()
                 for (document in it){
+                    val exchange = document.toObject(Exchange::class.java)
+                    /*
                     val exchange = Exchange(
                         id = document.data["id"] as String,
                         exchangetype = document.data["exchangetype"] as String,
@@ -34,6 +36,8 @@ class GameExRepositoryImp(
                         profileimage = document.data["profileimage"] as String,
                         stars = document.data["stars"] as Double
                     )
+
+                     */
                     listExchanges.add(exchange)
                 }
                 result.invoke(

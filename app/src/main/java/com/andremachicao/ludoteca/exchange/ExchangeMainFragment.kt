@@ -71,6 +71,22 @@ class ExchangeMainFragment: Fragment() {
             val goToGamesPage = ExchangeMainFragmentDirections.actionExchangeMainFragmentToGamesFragment()
             findNavController().navigate(goToGamesPage)
         }
+        binding.cbOnlyExchange.setOnClickListener {
+            if(binding.cbOnlyExchange.isChecked){
+                binding.cbOnlySale.isChecked = false
+                toast("Solo Intercambio")
+                //Implementar el filtrado por intercambio
+            }
+
+        }
+        binding.cbOnlySale.setOnClickListener {
+            if(binding.cbOnlySale.isChecked){
+                binding.cbOnlyExchange.isChecked = false
+                toast("Solo Venta")
+                //Implementar el filtrado por por venta
+            }
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
