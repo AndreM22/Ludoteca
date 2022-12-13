@@ -19,13 +19,19 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentGameUpdateBinding
+import com.andremachicao.ludoteca.exchange.ExchangeViewModel
+import com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange
 import com.andremachicao.ludoteca.game.model.Game
 import com.andremachicao.ludoteca.setImageSrcUrl
+import com.andremachicao.ludoteca.sharedPreferences.InitApp
+import com.andremachicao.ludoteca.utils.UiState
 import com.andremachicao.ludoteca.utils.hideKeyboard
+import com.andremachicao.ludoteca.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -34,11 +40,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.properties.Delegates
-
+@AndroidEntryPoint
 class GameUpdateFragment:Fragment() {
 
     private lateinit var binding: FragmentGameUpdateBinding
@@ -51,6 +58,7 @@ class GameUpdateFragment:Fragment() {
     private lateinit var progressDialog: ProgressDialog
     private var list = mutableListOf<String>()
     private var deletedImages = mutableListOf<Int>()
+    private val exchangeViewModel: ExchangeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -445,6 +453,7 @@ class GameUpdateFragment:Fragment() {
             auth.currentUser?.email?.let {
                 db.collection("users").document(it).collection("Games").document(args.gameInfo.id).update(gameMap)
                     .addOnSuccessListener { documentReference ->
+                        updateExchange()
                         progressDialog.dismiss()
                         Log.d(ContentValues.TAG, "successful")
                         Toast.makeText(context,"Se Actualizo el juego", Toast.LENGTH_SHORT).show()
@@ -462,6 +471,49 @@ class GameUpdateFragment:Fragment() {
             Toast.makeText(context,"Datos incompletos, porfavor llenar", Toast.LENGTH_SHORT).show()
         }
 
+    }
+    private fun updateExchange(){
+        db.collection("exchange")
+            .whereEqualTo("gameid",args.gameInfo.id)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents){
+                    exchangeViewModel.updateGameExchange(
+                        Exchange(
+                            id = document.data["id"] as String,
+                            exchangetype = document.data["exchangetype"] as String,
+                            gameid = document.data["gameid"] as String,
+                            gamename = binding.edtxNameGameUpdate.text.toString(),
+                            gamestate = numericalState,
+                            gamelanguage = binding.edtxLanguageInputUpdate.text.toString(),
+                            gamedescription = binding.edtxDescriptionGameUpdate.text.toString(),
+                            gameplayers = binding.edtxPlayersInputUpdate.text.toString().toInt(),
+                            gametime = binding.edtxTimeInputUpdate.text.toString(),
+                            gameprice = binding.edtxPriceInputUpdate.text.toString().toDouble(),
+                            gamelocation = binding.edtxLocationInputUpdate.text.toString(),
+                            gameimages = document.data["gameimages"] as List<String>,
+                            profileid = InitApp.prefs.getId(),
+                            profilenames = InitApp.prefs.getName(),
+                            profilelastnames = InitApp.prefs.getLastNames(),
+                            profileemail = InitApp.prefs.getEmail(),
+                            profileimage = InitApp.prefs.getImage(),
+                            stars = InitApp.prefs.getStars().toDouble(),
+                        )
+                    )
+                }
+            }
+        exchangeViewModel.updateGameEx.observe(viewLifecycleOwner){state ->
+            when(state){
+                is UiState.Loading ->{
+                }
+                is UiState.Failure ->{
+                    toast(state.error)
+                }
+                is UiState.Success ->{
+
+                }
+            }
+        }
     }
 
 }
