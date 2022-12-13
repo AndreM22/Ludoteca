@@ -70,4 +70,22 @@ class GameExRepositoryImp(
                 )
             }
     }
+
+    override fun updateExchange(exchange: Exchange, result: (UiState<String>) -> Unit) {
+        database.collection(FireStoreTables.EXCHANGE)
+            .document(exchange.id)
+            .set(exchange)
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(exchange.id)
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
 }

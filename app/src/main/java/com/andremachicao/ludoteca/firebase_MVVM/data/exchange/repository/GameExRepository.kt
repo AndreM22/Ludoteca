@@ -7,4 +7,5 @@ interface GameExRepository {
 
     fun getExGames(result:(UiState<List<Exchange>>)->Unit)
     fun addExchange(exchange: Exchange,result:(UiState<String>) ->Unit)
+    fun updateExchange(exchange: Exchange,result:(UiState<String>) ->Unit)
 }

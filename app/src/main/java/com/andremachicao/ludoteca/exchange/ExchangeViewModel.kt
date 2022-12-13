@@ -21,6 +21,10 @@ class ExchangeViewModel @Inject constructor(
     val addGamesEx:LiveData<UiState<String>>
         get() = _addGamesEx
 
+    private val _updateGameEx =MutableLiveData<UiState<String>>()
+    val updateGameEx:LiveData<UiState<String>>
+        get() =_updateGameEx
+
     fun getExGames(){
         _gamesEx.value = UiState.Loading
         repository.getExGames { _gamesEx.value = it }
@@ -32,6 +36,11 @@ class ExchangeViewModel @Inject constructor(
         repository.addExchange(exchange){
             _addGamesEx.value = it
         }
+    }
+
+    fun updateGameExchange(exchange: Exchange){
+        _updateGameEx.value = UiState.Loading
+        repository.updateExchange(exchange){_updateGameEx.value = it}
     }
 
 }

@@ -19,25 +19,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentEditProfileBinding
 import com.andremachicao.ludoteca.databinding.FragmentEditProfileBindingImpl
+import com.andremachicao.ludoteca.exchange.ExchangeViewModel
+import com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange
 import com.andremachicao.ludoteca.game.AddGameFragment
 import com.andremachicao.ludoteca.game.GameUpdateFragmentDirections
 import com.andremachicao.ludoteca.sharedPreferences.InitApp.Companion.prefs
-import com.andremachicao.ludoteca.utils.hideKeyboard
+import com.andremachicao.ludoteca.utils.*
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
-
+@AndroidEntryPoint
 class EditProfileFragment : Fragment() {
     private lateinit var binding: FragmentEditProfileBinding
     private val args: EditProfileFragmentArgs by navArgs()
@@ -46,6 +50,7 @@ class EditProfileFragment : Fragment() {
     private val db = Firebase.firestore
     private lateinit var progressDialog: ProgressDialog
     private var imageSelected = false
+    private val exchangeViewModel: ExchangeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -149,6 +154,7 @@ class EditProfileFragment : Fragment() {
                 db.collection("users").document(it).collection("Profile")
                     .document(args.profileToUpdate.id).update(profileMap).addOnSuccessListener {
                         updateSharedPrefs(image)
+                        updateGamesExchanged()
                         progressDialog.dismiss()
                         Toast.makeText(context,"Se Actualizo el perfil", Toast.LENGTH_SHORT).show()
                         val goToMainProfile = EditProfileFragmentDirections.actionEditProfileFragmentToMyProfileFragment()
@@ -169,6 +175,40 @@ class EditProfileFragment : Fragment() {
         prefs.saveEmail(args.profileToUpdate.email)
         prefs.saveStar(args.profileToUpdate.stars)
         prefs.saveImage(image)
+    }
+    private fun updateGamesExchanged(){
+        db.collection("exchange")
+            .whereEqualTo("profileid",prefs.getId())
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents){
+                    exchangeViewModel.updateGameExchange(
+                        Exchange(
+                            id = document.data["id"] as String,
+                            exchangetype = document.data["exchangetype"] as String,
+                            gameid = document.data["gameid"] as String,
+                            gamename = document.data["gamename"] as String,
+                            gamestate = document.data["gamestate"] as Double,
+                            gamelanguage = document.data["gamelanguage"] as String,
+                            gamedescription = document.data["gamedescription"] as String,
+                            gameplayers = (document.data["gameplayers"] as Long).toInt(),
+                            gametime = document.data["gametime"] as String,
+                            gameprice = document.data["gameprice"] as Double,
+                            gamelocation = document.data["gamelocation"] as String,
+                            gameimages = document.data["gameimages"] as List<String>,
+                            profileid = prefs.getId(),
+                            profilenames = prefs.getName(),
+                            profilelastnames = prefs.getLastNames(),
+                            profileemail = prefs.getEmail(),
+                            profileimage = prefs.getImage(),
+                            stars = prefs.getStars().toDouble(),
+                        )
+                    )
+
+                }
+
+            }
+
     }
 
     private fun chooseImageGallery() {
