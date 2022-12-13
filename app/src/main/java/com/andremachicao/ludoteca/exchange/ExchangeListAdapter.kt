@@ -42,6 +42,8 @@ class ExchangeListAdapter:RecyclerView.Adapter<ListOfGamesExchangeViewHolder>(){
 class ListOfGamesExchangeViewHolder(val binding: ExchangeGameItemBinding):RecyclerView.ViewHolder(binding.root){
     fun bind(exchange: Exchange){
         binding.exchangeInfo = exchange
+        val completeName = "${exchange.profilenames} ${exchange.profilelastnames}"
+        binding.txNameUserItemExchange.text = completeName
     }
 
 }

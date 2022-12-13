@@ -25,6 +25,10 @@ class ExchangeViewModel @Inject constructor(
     val updateGameEx:LiveData<UiState<String>>
         get() =_updateGameEx
 
+    private val _deleteGameEx =MutableLiveData<UiState<String>>()
+    val deleteGameEx:LiveData<UiState<String>>
+        get() =_deleteGameEx
+
     fun getExGames(){
         _gamesEx.value = UiState.Loading
         repository.getExGames { _gamesEx.value = it }
@@ -42,6 +46,18 @@ class ExchangeViewModel @Inject constructor(
         _updateGameEx.value = UiState.Loading
         repository.updateExchange(exchange){
             _updateGameEx.value = it}
+    }
+
+    fun deleteExchangeGameFun(exchange: Exchange){
+        _deleteGameEx.value = UiState.Loading
+        repository.deleteExchange(exchange.id){
+            _deleteGameEx.value = it
+        }
+    }
+
+    fun filterExGames(typeExchange: String){
+        _gamesEx.value = UiState.Loading
+        repository.someExGames(typeExchange) { _gamesEx.value = it }
     }
 
 }

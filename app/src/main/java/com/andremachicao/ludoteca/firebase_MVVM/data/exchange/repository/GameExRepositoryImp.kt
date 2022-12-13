@@ -15,29 +15,6 @@ class GameExRepositoryImp(
                 val listExchanges = arrayListOf<Exchange>()
                 for (document in it){
                     val exchange = document.toObject(Exchange::class.java)
-                    /*
-                    val exchange = Exchange(
-                        id = document.data["id"] as String,
-                        exchangetype = document.data["exchangetype"] as String,
-                        gameid = document.data["gameid"] as String,
-                        gamename = document.data["gamename"] as String,
-                        gamestate = document.data["gamestate"] as Double,
-                        gamelanguage = document.data["gamelanguage"] as String,
-                        gamedescription = document.data["gamedescription"] as String,
-                        gameplayers = (document.data["gameplayers"] as Long).toInt(),
-                        gametime = document.data["gametime"] as String,
-                        gameprice = document.data["gameprice"] as Double,
-                        gamelocation = document.data["gamelocation"] as String,
-                        gameimages = document.data["gameimages"] as List<String>,
-                        profileid = document.data["profileid"] as String,
-                        profilenames = document.data["profilenames"] as String,
-                        profilelastnames = document.data["profilelastnames"] as String,
-                        profileemail = document.data["profileemail"] as String,
-                        profileimage = document.data["profileimage"] as String,
-                        stars = document.data["stars"] as Double
-                    )
-
-                     */
                     listExchanges.add(exchange)
                 }
                 result.invoke(
@@ -45,6 +22,29 @@ class GameExRepositoryImp(
                 )
             }
             .addOnFailureListener{
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun someExGames(typeExchange: String, result: (UiState<List<Exchange>>) -> Unit) {
+        database.collection(FireStoreTables.EXCHANGE)
+            .whereEqualTo("exchangetype",typeExchange)
+            .get()
+            .addOnSuccessListener {
+                val listExchanges = arrayListOf<Exchange>()
+                for (document in it){
+                    val exchange = document.toObject(Exchange::class.java)
+                    listExchanges.add(exchange)
+                }
+                result.invoke(
+                    UiState.Success(listExchanges)
+                )
+            }
+            .addOnFailureListener {
                 result.invoke(
                     UiState.Failure(
                         it.localizedMessage
@@ -78,6 +78,24 @@ class GameExRepositoryImp(
             .addOnSuccessListener {
                 result.invoke(
                     UiState.Success(exchange.id)
+                )
+            }
+            .addOnFailureListener {
+                result.invoke(
+                    UiState.Failure(
+                        it.localizedMessage
+                    )
+                )
+            }
+    }
+
+    override fun deleteExchange(id: String, result: (UiState<String>) -> Unit) {
+        database.collection(FireStoreTables.EXCHANGE)
+            .document(id)
+            .delete()
+            .addOnSuccessListener {
+                result.invoke(
+                    UiState.Success(id)
                 )
             }
             .addOnFailureListener {

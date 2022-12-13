@@ -63,9 +63,9 @@ class ExchangeMainFragment: Fragment() {
         }
 
         listOfExchangesAdapter.setOnExchangeClickListener {
-            Toast.makeText(context,"El nombre del juego es: ${it.gamename}",Toast.LENGTH_SHORT).show()
-            //val goToShowDetails = GamesFragmentDirections.actionGamesFragmentToGameDetailsFragment(it)
-            //findNavController().navigate(goToShowDetails)
+
+            val goToShowDetails = ExchangeMainFragmentDirections.actionExchangeMainFragmentToExchangeDetails(it)
+            findNavController().navigate(goToShowDetails)
         }
         binding.btAddExchange.setOnClickListener {
             val goToGamesPage = ExchangeMainFragmentDirections.actionExchangeMainFragmentToGamesFragment()
@@ -75,7 +75,9 @@ class ExchangeMainFragment: Fragment() {
             if(binding.cbOnlyExchange.isChecked){
                 binding.cbOnlySale.isChecked = false
                 toast("Solo Intercambio")
-                //Implementar el filtrado por intercambio
+                exchangeViewModel.filterExGames("Solo intercambio")
+            }else{
+                exchangeViewModel.getExGames()
             }
 
         }
@@ -83,7 +85,9 @@ class ExchangeMainFragment: Fragment() {
             if(binding.cbOnlySale.isChecked){
                 binding.cbOnlyExchange.isChecked = false
                 toast("Solo Venta")
-                //Implementar el filtrado por por venta
+                exchangeViewModel.filterExGames("Solo venta")
+            }else{
+                exchangeViewModel.getExGames()
             }
         }
 

@@ -122,10 +122,25 @@ class GameDetailsFragment : Fragment() {
                     }.addOnFailureListener{ e ->
                         Log.d(TAG,"El error es: $e")
                     }
+                    deleteExchange()
                     Toast.makeText(context,"Se elimino el juego",Toast.LENGTH_SHORT).show()
 
                     findNavController().navigate(goToMainGameList)
                 }
+            }
+
+        }
+        binding.btUnxchangeDetailsGamePage.setOnClickListener {
+            deleteExchange()
+            val refGame = db.collection("users").document(prefs.getEmail()).collection("Games").document(args.gameInfo.id)
+            refGame.update("exchange",false).addOnSuccessListener {
+                binding.spinnerTypeExchangeDetailsGame.show()
+                binding.btExchangeDetailsGamePage.show()
+                binding.txExchangedGame.hide()
+                binding.btUnxchangeDetailsGamePage.hide()
+                toast("Se elimino el juego del intercambio")
+                val goToMainpage = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
+                findNavController().navigate(goToMainpage)
             }
 
         }
@@ -172,7 +187,7 @@ class GameDetailsFragment : Fragment() {
                     val refGame = db.collection("users").document(prefs.getEmail()).collection("Games").document(args.gameInfo.id)
                     refGame.update("exchange",true).addOnSuccessListener {
                         progressDialog.dismiss()
-                        toast("se intercambio el juego")
+                        toast("Se puso en intercambio el juego")
                         val goToMainpage = GameDetailsFragmentDirections.actionGameDetailsFragmentToGamesFragment()
                         findNavController().navigate(goToMainpage)
                     }.addOnFailureListener{
@@ -191,6 +206,17 @@ class GameDetailsFragment : Fragment() {
             }
         })
 
+    }
+    private fun deleteExchange(){
+        db.collection("exchange")
+            .whereEqualTo("gameid",args.gameInfo.id)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents){
+                    exchangeViewModel.deleteExchangeGameFun(document.toObject(Exchange::class.java))
+                }
+
+            }
     }
 
 }

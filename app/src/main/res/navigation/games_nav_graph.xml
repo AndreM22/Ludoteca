@@ -121,5 +121,8 @@
         <argument
             android:name="detailsEx"
             app:argType="com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange" />
+        <action
+            android:id="@+id/action_exchangeDetails_to_exchangeMainFragment"
+            app:destination="@id/exchangeMainFragment" />
     </fragment>
 </navigation>

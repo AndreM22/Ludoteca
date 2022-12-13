@@ -93,21 +93,6 @@ class EditProfileFragment : Fragment() {
                 chooseImageGallery()
             }
         }
-        exchangeViewModel.updateGameEx.observe(viewLifecycleOwner){state ->
-            when(state){
-                is UiState.Loading ->{
-
-                }
-                is UiState.Failure ->{
-                    toast(state.error)
-                }
-                is UiState.Success ->{
-                    toast("Se actualizo el juego")
-
-                }
-            }
-
-        }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -220,9 +205,21 @@ class EditProfileFragment : Fragment() {
                             stars = prefs.getStars().toDouble(),
                         )
                     )
-                }
 
+                }
             }
+        exchangeViewModel.updateGameEx.observe(viewLifecycleOwner){state ->
+            when(state){
+                is UiState.Loading ->{
+                }
+                is UiState.Failure ->{
+                    toast(state.error)
+                }
+                is UiState.Success ->{
+
+                }
+            }
+        }
     }
 
     private fun chooseImageGallery() {

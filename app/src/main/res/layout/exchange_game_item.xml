@@ -123,20 +123,20 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginBottom="10dp"
                 srcUrl="@{exchangeInfo.profileimage}"
                 app:srcCompat="@drawable/user"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornersSize"
-
-            app:layout_constraintTop_toBottomOf="@id/idIcLocationItemExchange"
+                app:layout_constraintTop_toBottomOf="@id/idIcLocationItemExchange"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txNameUserItemExchange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:text="@{exchangeInfo.profilenames}"
                 tools:text="Manuel Alejandro Valenzuela Delgadillo"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/imgUserExchangeItem"
