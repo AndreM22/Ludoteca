@@ -20,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andremachicao.ludoteca.R
@@ -91,6 +92,21 @@ class EditProfileFragment : Fragment() {
             }else{
                 chooseImageGallery()
             }
+        }
+        exchangeViewModel.updateGameEx.observe(viewLifecycleOwner){state ->
+            when(state){
+                is UiState.Loading ->{
+
+                }
+                is UiState.Failure ->{
+                    toast(state.error)
+                }
+                is UiState.Success ->{
+                    toast("Se actualizo el juego")
+
+                }
+            }
+
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
             OnBackPressedCallback(true) {
@@ -204,11 +220,9 @@ class EditProfileFragment : Fragment() {
                             stars = prefs.getStars().toDouble(),
                         )
                     )
-
                 }
 
             }
-
     }
 
     private fun chooseImageGallery() {

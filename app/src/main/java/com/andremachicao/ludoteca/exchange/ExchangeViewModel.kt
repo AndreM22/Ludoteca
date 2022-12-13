@@ -40,7 +40,8 @@ class ExchangeViewModel @Inject constructor(
 
     fun updateGameExchange(exchange: Exchange){
         _updateGameEx.value = UiState.Loading
-        repository.updateExchange(exchange){_updateGameEx.value = it}
+        repository.updateExchange(exchange){
+            _updateGameEx.value = it}
     }
 
 }
