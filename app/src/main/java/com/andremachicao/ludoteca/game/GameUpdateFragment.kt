@@ -409,7 +409,7 @@ class GameUpdateFragment:Fragment() {
 
         }
     }
-    private fun uploadImages2(id:String) {
+    private fun uploadImages(id:String) {
         if (deletedImages) {
             val listOfImages = mutableListOf<String>()
             //****************************Imagen 1 ***********************//
@@ -445,34 +445,17 @@ class GameUpdateFragment:Fragment() {
                 if (!secondImgFree) {
                     if (!thirdImgFree) {
                         val uploadTask = imageRoute.putBytes(data)
-                        uploadTask.addOnFailureListener {
-                        }.addOnSuccessListener {
+                        uploadTask.addOnSuccessListener {
                             imageRoute.downloadUrl.addOnSuccessListener {
-                                Log.v("STORAGE", "-------->>>$it")
                                 listOfImages.add(it.toString())
-                                Log.d(ContentValues.TAG, "El tamanio de lista es: ${listOfImages.size}")
                                 val uploadTask2 = imageRoute2.putBytes(data2)
-                                uploadTask2.addOnFailureListener {
-
-                                }.addOnSuccessListener {
+                                uploadTask2.addOnSuccessListener {
                                     imageRoute2.downloadUrl.addOnSuccessListener {
-                                        Log.v("STORAGE", "-------->>>$it")
                                         listOfImages.add(it.toString())
-                                        Log.d(
-                                            ContentValues.TAG,
-                                            "El tamanio de lista es: ${listOfImages.size}"
-                                        )
                                         val uploadTask3 = imageRoute3.putBytes(data3)
-                                        uploadTask3.addOnFailureListener {
-
-                                        }.addOnSuccessListener {
+                                        uploadTask3.addOnSuccessListener {
                                             imageRoute3.downloadUrl.addOnSuccessListener {
-                                                Log.v("STORAGE", "-------->>>$it")
                                                 listOfImages.add(it.toString())
-                                                Log.d(
-                                                    ContentValues.TAG,
-                                                    "El tamanio de lista es: ${listOfImages.size}"
-                                                )
                                                 uploadGame(listOfImages)
                                             }
                                         }
@@ -483,14 +466,11 @@ class GameUpdateFragment:Fragment() {
                         //caso(1,1,1)
                     } else {
                         val uploadTask = imageRoute.putBytes(data)
-                        uploadTask.addOnFailureListener {
-                        }.addOnSuccessListener {
+                        uploadTask.addOnSuccessListener {
                             imageRoute.downloadUrl.addOnSuccessListener {
                                 listOfImages.add(it.toString())
                                 var uploadTask2 = imageRoute2.putBytes(data2)
-                                uploadTask2.addOnFailureListener {
-
-                                }.addOnSuccessListener {
+                                uploadTask2.addOnSuccessListener {
                                     imageRoute2.downloadUrl.addOnSuccessListener {
                                         listOfImages.add(it.toString())
                                         uploadGame(listOfImages)
@@ -507,8 +487,7 @@ class GameUpdateFragment:Fragment() {
                         imageRoute.downloadUrl.addOnSuccessListener {
                             listOfImages.add(it.toString())
                             val uploadTask3 = imageRoute3.putBytes(data3)
-                            uploadTask3.addOnFailureListener {
-                            }.addOnSuccessListener {
+                            uploadTask3.addOnSuccessListener {
                                 imageRoute3.downloadUrl.addOnSuccessListener {
                                     listOfImages.add(it.toString())
                                     uploadGame(listOfImages)
@@ -519,8 +498,7 @@ class GameUpdateFragment:Fragment() {
                     //caso(1,0,1)
                 } else {
                     val uploadTask = imageRoute.putBytes(data)
-                    uploadTask.addOnFailureListener {
-                    }.addOnSuccessListener {
+                    uploadTask.addOnSuccessListener {
                         imageRoute.downloadUrl.addOnSuccessListener {
                             listOfImages.add(it.toString())
                             uploadGame(listOfImages)
@@ -532,14 +510,11 @@ class GameUpdateFragment:Fragment() {
             else if (!secondImgFree) {
                 if (!thirdImgFree) {
                     val uploadTask2 = imageRoute2.putBytes(data2)
-                    uploadTask2.addOnFailureListener {
-                    }.addOnSuccessListener {
+                    uploadTask2.addOnSuccessListener {
                         imageRoute2.downloadUrl.addOnSuccessListener {
                             listOfImages.add(it.toString())
                             val uploadTask3 = imageRoute3.putBytes(data3)
-                            uploadTask3.addOnFailureListener {
-
-                            }.addOnSuccessListener {
+                            uploadTask3.addOnSuccessListener {
                                 imageRoute3.downloadUrl.addOnSuccessListener {
                                     listOfImages.add(it.toString())
                                     uploadGame(listOfImages)
@@ -550,8 +525,7 @@ class GameUpdateFragment:Fragment() {
                     //caso(0,1,1)
                 } else {
                     val uploadTask2 = imageRoute2.putBytes(data2)
-                    uploadTask2.addOnFailureListener {
-                    }.addOnSuccessListener {
+                    uploadTask2.addOnSuccessListener {
                         imageRoute2.downloadUrl.addOnSuccessListener {
                             listOfImages.add(it.toString())
                             uploadGame(listOfImages)
@@ -562,8 +536,7 @@ class GameUpdateFragment:Fragment() {
 
             } else if (!thirdImgFree) {
                 val uploadTask3 = imageRoute3.putBytes(data3)
-                uploadTask3.addOnFailureListener {
-                }.addOnSuccessListener {
+                uploadTask3.addOnSuccessListener {
                     imageRoute3.downloadUrl.addOnSuccessListener {
                         listOfImages.add(it.toString())
                         uploadGame(listOfImages)
@@ -575,131 +548,6 @@ class GameUpdateFragment:Fragment() {
             uploadGame(list)
     }
 }
-
-    private fun uploadImages(id:String) {
-        //Todo arreglar para cada situacion
-        if (deletedImages) {
-            val storageRef = storage.reference
-            val listOfImages = mutableListOf<String>()
-            //val imageRoute = storageRef.child("games/$id/images/img_${System.currentTimeMillis()}.jpeg")
-            val imageRoute =
-                storageRef.child("${auth.currentUser?.email}/games/$id/images/img_1.jpeg")
-            binding.img1GamesUpdate.isDrawingCacheEnabled = true
-            binding.img1GamesUpdate.buildDrawingCache()
-            val bitmap = (binding.img1GamesUpdate.drawable as BitmapDrawable).bitmap
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-            val data = baos.toByteArray()
-            val uploadTask = imageRoute.putBytes(data)
-            if (imgCount == 2) {
-                uploadTask.addOnFailureListener {
-
-                }.addOnSuccessListener {
-                    imageRoute.downloadUrl.addOnSuccessListener {
-                        Log.v("STORAGE", "-------->>>$it")
-                        listOfImages.add(it.toString())
-                        Log.d(ContentValues.TAG, "El tamanio de lista es: ${listOfImages.size}")
-                        uploadGame(listOfImages)
-                    }
-                }
-            }
-
-            if (imgCount == 3) {
-                val imageRoute2 =
-                    storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
-                binding.img2GamesUpdate.isDrawingCacheEnabled = true
-                binding.img2GamesUpdate.buildDrawingCache()
-                val bitmap2 = (binding.img2GamesUpdate.drawable as BitmapDrawable).bitmap
-                val baos2 = ByteArrayOutputStream()
-                bitmap2.compress(Bitmap.CompressFormat.JPEG, 50, baos2)
-                val data2 = baos2.toByteArray()
-
-                uploadTask.addOnFailureListener {
-
-                }.addOnSuccessListener {
-                    imageRoute.downloadUrl.addOnSuccessListener {
-                        Log.v("STORAGE", "-------->>>$it")
-                        listOfImages.add(it.toString())
-                        Log.d(ContentValues.TAG, "El tamanio de lista es: ${listOfImages.size}")
-                        var uploadTask2 = imageRoute2.putBytes(data2)
-                        uploadTask2.addOnFailureListener {
-
-                        }.addOnSuccessListener {
-                            imageRoute2.downloadUrl.addOnSuccessListener {
-                                Log.v("STORAGE", "-------->>>$it")
-                                listOfImages.add(it.toString())
-                                Log.d(
-                                    ContentValues.TAG,
-                                    "El tamanio de lista es: ${listOfImages.size}"
-                                )
-                                uploadGame(listOfImages)
-                            }
-                        }
-                    }
-                }
-
-            }
-            if (imgCount == 4) {
-                val imageRoute2 =
-                    storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
-                binding.img2GamesUpdate.isDrawingCacheEnabled = true
-                binding.img2GamesUpdate.buildDrawingCache()
-                val bitmap2 = (binding.img2GamesUpdate.drawable as BitmapDrawable).bitmap
-                val baos2 = ByteArrayOutputStream()
-                bitmap2.compress(Bitmap.CompressFormat.JPEG, 50, baos2)
-                val data2 = baos2.toByteArray()
-
-                val imageRoute3 =
-                    storageRef.child("${auth.currentUser?.email}/games/$id/images/img_3.jpeg")
-                binding.img3GamesUpdate.isDrawingCacheEnabled = true
-                binding.img3GamesUpdate.buildDrawingCache()
-                val bitmap3 = (binding.img3GamesUpdate.drawable as BitmapDrawable).bitmap
-                val baos3 = ByteArrayOutputStream()
-                bitmap3.compress(Bitmap.CompressFormat.JPEG, 50, baos3)
-                val data3 = baos3.toByteArray()
-
-                uploadTask.addOnFailureListener {
-
-                }.addOnSuccessListener {
-                    imageRoute.downloadUrl.addOnSuccessListener {
-                        Log.v("STORAGE", "-------->>>$it")
-                        listOfImages.add(it.toString())
-                        Log.d(ContentValues.TAG, "El tamanio de lista es: ${listOfImages.size}")
-                        val uploadTask2 = imageRoute2.putBytes(data2)
-                        uploadTask2.addOnFailureListener {
-
-                        }.addOnSuccessListener {
-                            imageRoute2.downloadUrl.addOnSuccessListener {
-                                Log.v("STORAGE", "-------->>>$it")
-                                listOfImages.add(it.toString())
-                                Log.d(
-                                    ContentValues.TAG,
-                                    "El tamanio de lista es: ${listOfImages.size}"
-                                )
-                                val uploadTask3 = imageRoute3.putBytes(data3)
-                                uploadTask3.addOnFailureListener {
-
-                                }.addOnSuccessListener {
-                                    imageRoute3.downloadUrl.addOnSuccessListener {
-                                        Log.v("STORAGE", "-------->>>$it")
-                                        listOfImages.add(it.toString())
-                                        Log.d(
-                                            ContentValues.TAG,
-                                            "El tamanio de lista es: ${listOfImages.size}"
-                                        )
-                                        uploadGame(listOfImages)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }else{
-            uploadGame(list)
-        }
-    }
-
     private fun uploadGame(images:List<String>){
         try{
             val gameMap = mapOf(
