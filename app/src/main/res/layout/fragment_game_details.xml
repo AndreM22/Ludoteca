@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="18dp"
-                android:text="Fecha de fabricación :"
+                android:text="Fecha de compra :"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/languageLabelDetails"
                 app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="18dp"
-                android:text="Locación :"
+                android:text="Ubicacion:"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@id/timeLabelDetails"
                 app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
@@ -249,6 +249,73 @@
                 app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Scelerisque varius morbi enim nunc faucibus a pellentesque sit amet. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Eget magna fermentum iaculis eu non diam. Fermentum posuere urna nec tincidunt praesent semper feugiat. Nisi vitae suscipit tellus mauris a diam maecenas." />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerExchangeDetailsGamePage"
+                android:layout_width="350dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@id/descriptionDataInfoPage"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainer"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainer"
+                android:background="@color/light_red">
+                <TextView
+                    android:id="@+id/txExchangedGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Juego en intercambio"
+                    android:textSize="24sp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/button_add_image"
+                    android:textColor="#fff"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+                <Button
+                    android:id="@+id/btUnxchangeDetailsGamePage"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/button_gallery"
+                    android:visibility="gone"
+                    android:text="Quitar del intercambio"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/txExchangedGame"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinnerTypeExchangeDetailsGame"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:dropDownWidth="match_parent"
+                    android:minHeight="48dp"
+                    android:popupBackground="#D3D4D9"
+                    app:barrierMargin="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck"
+                    style="@style/spinner_style"/>
+                <Button
+                    android:id="@+id/btExchangeDetailsGamePage"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/button_gallery"
+                    android:text="Intercambiar Juego"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/spinnerTypeExchangeDetailsGame"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <Button
                 android:id="@+id/btUpdateGame"
                 android:layout_width="0dp"
@@ -258,7 +325,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Actualizar Información"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/descriptionDataInfoPage"
+                app:layout_constraintTop_toBottomOf="@id/containerExchangeDetailsGamePage"
                 app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
                 app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
                 app:srcCompat="@drawable/button_background_2" />
@@ -277,20 +344,9 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/infoGameContainer"
                 app:srcCompat="@drawable/button_background_2" />
-            <Button
-                android:id="@+id/btExchangeDetailsGamePage"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/button_gallery"
-                android:text="Intercambiar Juego"
-                android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/buttonDeleteGame"
-                app:layout_constraintEnd_toEndOf="@+id/infoGameContainer"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/infoGameContainer" />
+
+
+
 
 
 

@@ -26,12 +26,19 @@ import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentAddGameBinding
 import com.andremachicao.ludoteca.game.model.Game
 import com.andremachicao.ludoteca.utils.hideKeyboard
+import com.andremachicao.ludoteca.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.lang.Math.abs
+import java.text.SimpleDateFormat
+import java.time.Instant.now
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -203,6 +210,16 @@ class AddGameFragment: Fragment(){
                 Toast.makeText(context,"Introduzca una fecha",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            /*
+            val dates = SimpleDateFormat("dd/MM/yyyy")
+            val date = dates.parse(binding.edtxTimeInput.text.toString())
+            val actualDate = dates.parse(now().toString())
+            val difference = abs(actualDate.time - date.time)
+            val differenceDates = difference/(24*60*60*1000)
+            val dayDifference = differenceDates.toString()
+            toast(dayDifference)
+            
+             */
 
             val id = UUID.randomUUID().toString()
             progressDialog.show()
@@ -328,18 +345,17 @@ class AddGameFragment: Fragment(){
                     Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                }
-            }
+                    var uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnFailureListener{
 
-            var uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(id,listOfImages)
+                    }.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            Log.v("STORAGE", "-------->>>$it")
+                            listOfImages.add(it.toString())
+                            Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                            uploadGame(id,listOfImages)
+                        }
+                    }
                 }
             }
         }
@@ -367,34 +383,31 @@ class AddGameFragment: Fragment(){
                     Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                    val uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnFailureListener{
+
+                    }.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            Log.v("STORAGE", "-------->>>$it")
+                            listOfImages.add(it.toString())
+                            Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                            val uploadTask3 = imageRoute3.putBytes(data3)
+                            uploadTask3.addOnFailureListener{
+
+                            }.addOnSuccessListener {
+                                imageRoute3.downloadUrl.addOnSuccessListener {
+                                    Log.v("STORAGE", "-------->>>$it")
+                                    listOfImages.add(it.toString())
+                                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                                    uploadGame(id,listOfImages)
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            val uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                }
-            }
-            val uploadTask3 = imageRoute3.putBytes(data3)
-            uploadTask3.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute3.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(id,listOfImages)
-                }
-            }
         }
-
-
-
     }
     private fun uploadGame(id:String,images:List<String>){
         try{

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="gameExInfo"
-            type="com.andremachicao.ludoteca.exchange.Exchange" />
+            type="com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange" />
     </data>
 
     <ScrollView
@@ -215,6 +215,30 @@
                 app:layout_constraintTop_toBottomOf="@id/languageDataExchangeDetails"
                 app:layout_constraintStart_toEndOf="@+id/locationLabelExchangeDetails"
                 tools:text="La Paz" />
+            <TextView
+                android:id="@+id/exchangeTypeLabelExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Tipo de intercambio"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintTop_toBottomOf="@id/locationLabelExchangeDetails"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"/>
+
+            <TextView
+                android:id="@+id/exchangeTypeDataExchangeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@{gameExInfo.exchangetype}"
+                tools:text="Solo Intercambio"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/exchangeTypeLabelExchangeDetails"
+                app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
+                app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"/>
+"
 
             <TextView
                 android:id="@+id/descriptionLabelInfoExchangePage"
@@ -226,7 +250,7 @@
                 android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="@id/infoGameContainerExchangeDetails"
                 app:layout_constraintStart_toStartOf="@id/infoGameContainerExchangeDetails"
-                app:layout_constraintTop_toBottomOf="@id/locationLabelExchangeDetails" />
+                app:layout_constraintTop_toBottomOf="@id/exchangeTypeDataExchangeDetails" />
 
 
             <TextView
@@ -258,6 +282,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="15dp"
+                    srcUrl="@{gameExInfo.profileimage}"
                     android:src="@drawable/user"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -269,7 +294,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@{gameExInfo.profilenames}"
                     android:textSize="18sp"
                     tools:text="Manuel Alejandro Valenzuela Delgadillo"
                     app:layout_constraintTop_toBottomOf="@id/imgUserExchangeDetails"
@@ -279,7 +303,7 @@
 
 
                 <Button
-                    android:id="@+id/btUpdateGame"
+                    android:id="@+id/btChatWithUserExchangeDetails"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="40dp"

@@ -1,6 +1,7 @@
 package com.andremachicao.ludoteca.game
 
 import android.Manifest
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -19,13 +20,20 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andremachicao.ludoteca.R
 import com.andremachicao.ludoteca.databinding.FragmentGameUpdateBinding
+import com.andremachicao.ludoteca.exchange.ExchangeViewModel
+import com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange
 import com.andremachicao.ludoteca.game.model.Game
 import com.andremachicao.ludoteca.setImageSrcUrl
+import com.andremachicao.ludoteca.sharedPreferences.InitApp
+import com.andremachicao.ludoteca.sharedPreferences.InitApp.Companion.prefs
+import com.andremachicao.ludoteca.utils.UiState
 import com.andremachicao.ludoteca.utils.hideKeyboard
+import com.andremachicao.ludoteca.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -34,11 +42,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.properties.Delegates
-
+@AndroidEntryPoint
 class GameUpdateFragment:Fragment() {
 
     private lateinit var binding: FragmentGameUpdateBinding
@@ -50,7 +59,11 @@ class GameUpdateFragment:Fragment() {
     private var numericalState by Delegates.notNull<Double>()
     private lateinit var progressDialog: ProgressDialog
     private var list = mutableListOf<String>()
-    private var deletedImages = mutableListOf<Int>()
+    private var deletedImages = false
+    private var firstImgFree = true
+    private var secondImgFree = true
+    private var thirdImgFree = true
+    private val exchangeViewModel: ExchangeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,22 +102,25 @@ class GameUpdateFragment:Fragment() {
         // Para colocar las imagenes
         list = args.gameInfo.images as MutableList<String>
         imgCount += list.size
+        firstImgFree = false
         binding.img1GamesUpdate.visibility = View.VISIBLE
         binding.btDeleteImg1.visibility = View.VISIBLE
         Glide.with(binding.img1GamesUpdate)
             .load(list[0])
             .into(binding.img1GamesUpdate)
         if(list.size >1){
+            secondImgFree = false
             binding.img2GamesUpdate.visibility = View.VISIBLE
             binding.btDeleteImg2.visibility = View.VISIBLE
             Glide.with(binding.img2GamesUpdate)
-                .load(list[0])
+                .load(list[1])
                 .into(binding.img2GamesUpdate)
             if(list.size ==3){
+                thirdImgFree = false
                 binding.img3GamesUpdate.visibility = View.VISIBLE
                 binding.btDeleteImg3.visibility = View.VISIBLE
                 Glide.with(binding.img3GamesUpdate)
-                    .load(list[0])
+                    .load(list[2])
                     .into(binding.img3GamesUpdate)
             }
         }
@@ -113,48 +129,23 @@ class GameUpdateFragment:Fragment() {
             imgCount -= 1
             binding.img1GamesUpdate.visibility= View.GONE
             binding.btDeleteImg1.visibility = View.GONE
-            deletedImages.add(1)
-            /*
-            val storageRef = storage.reference
-            val desertRef1 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_1.jpeg")
-            desertRef1.delete().addOnSuccessListener {
-            }.addOnFailureListener{ e ->
-                Log.d(ContentValues.TAG,"El error es: $e")
-            }
-            list.remove(args.gameInfo.images[0])
-             */
+            firstImgFree = true
+            deletedImages = true
 
         }
         binding.btDeleteImg2.setOnClickListener {
             imgCount -=1
             binding.img2GamesUpdate.visibility = View.GONE
             binding.btDeleteImg2.visibility = View.GONE
-            deletedImages.add(2)
-            /*
-            val storageRef = storage.reference
-            val desertRef2 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_2.jpeg")
-            desertRef2.delete().addOnSuccessListener {
-            }.addOnFailureListener{ e ->
-                Log.d(ContentValues.TAG,"El error es: $e")
-            }
-            list.remove(args.gameInfo.images[1])
-
-             */
+            secondImgFree = true
+            deletedImages = true
         }
         binding.btDeleteImg3.setOnClickListener {
             imgCount -= 1
             binding.img3GamesUpdate.visibility = View.GONE
             binding.btDeleteImg3.visibility = View.GONE
-            deletedImages.add(3)
-            /*
-            val storageRef = storage.reference
-            val desertRef3 = storageRef.child("${auth.currentUser?.email}/games/${args.gameInfo.id}/images/img_3.jpeg")
-            desertRef3.delete().addOnSuccessListener {
-            }.addOnFailureListener{ e ->
-                Log.d(ContentValues.TAG,"El error es: $e")
-            }
-            list.remove(args.gameInfo.images[2])
-            */
+            thirdImgFree = true
+            deletedImages = true
         }
 
 
@@ -236,6 +227,7 @@ class GameUpdateFragment:Fragment() {
         binding.btGalleryUpdate.setOnClickListener {
             it.hideKeyboard()
             if(imgCount <=3){
+                deletedImages = true
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -254,6 +246,7 @@ class GameUpdateFragment:Fragment() {
         binding.btTakePictureUpdate.setOnClickListener {
             it.hideKeyboard()
             if(imgCount <=3){
+                deletedImages = true
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePhotoIntent, AddGameFragment.CAMERA_CHOOSE)
             }else{
@@ -288,8 +281,9 @@ class GameUpdateFragment:Fragment() {
                 return@setOnClickListener
             }
 
-            val id = UUID.randomUUID().toString()
+            val id = args.gameInfo.id
             progressDialog.show()
+            deleteOldImages()
             uploadImages(id)
         }
 
@@ -316,116 +310,244 @@ class GameUpdateFragment:Fragment() {
         startActivityForResult(intent, AddGameFragment.IMAGE_CHOOSE)
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            AddGameFragment.PERMISSION_CODE ->{
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    chooseImageGallery()
+                }else{
+                    Toast.makeText(context,"Permission denied",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        var inputImage = 0
+        when {
+            firstImgFree -> {
+                inputImage = 1
+                firstImgFree = false
+            }
+            secondImgFree -> {
+                inputImage = 2
+                secondImgFree = false
+            }
+            thirdImgFree -> {
+                inputImage = 3
+                thirdImgFree = false
+            }
+        }
+        if (requestCode == AddGameFragment.IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
+            when(inputImage){
+                1 ->{
+                    binding.img1GamesUpdate.setImageURI(data?.data)
+                    binding.img1GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg1.visibility = View.VISIBLE
+                }
+                2 ->{
+                    binding.img2GamesUpdate.setImageURI(data?.data)
+                    binding.img2GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg2.visibility = View.VISIBLE
+                }
+                3 ->{
+                    binding.img3GamesUpdate.setImageURI(data?.data)
+                    binding.img3GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg3.visibility = View.VISIBLE
+                }
+            }
+            imgCount++
+
+        }else if(requestCode == AddGameFragment.CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
+            val imgBitMap: Bitmap? = data!!.extras!!.get("data") as Bitmap?
+            when(inputImage){
+                1 ->{
+                    binding.img1GamesUpdate.setImageBitmap(imgBitMap)
+                    binding.img1GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg1.visibility = View.VISIBLE
+                }
+                2 ->{
+                    binding.img2GamesUpdate.setImageBitmap(imgBitMap)
+                    binding.img2GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg2.visibility = View.VISIBLE
+                }
+                3 ->{
+                    binding.img3GamesUpdate.setImageBitmap(imgBitMap)
+                    binding.img3GamesUpdate.visibility = View.VISIBLE
+                    binding.btDeleteImg3.visibility = View.VISIBLE
+                }
+            }
+            imgCount++
+
+        }
+
+    }
+    private fun deleteOldImages(){
+        if(deletedImages){
+            val email = prefs.getEmail()
+            val storageRef = storage.reference
+            val desertRef1 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_1.jpeg")
+            val desertRef2 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_2.jpeg")
+            val desertRef3 = storageRef.child("$email/games/${args.gameInfo.id}/images/img_3.jpeg")
+            desertRef1.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+            desertRef2.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+            desertRef3.delete().addOnSuccessListener {
+            }.addOnFailureListener{ e ->
+                Log.d(ContentValues.TAG,"El error es: $e")
+            }
+
+        }
+    }
     private fun uploadImages(id:String) {
-        val storageRef = storage.reference
-        val listOfImages = mutableListOf<String>()
-        //val imageRoute = storageRef.child("games/$id/images/img_${System.currentTimeMillis()}.jpeg")
-        val imageRoute = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_1.jpeg")
-        binding.img1GamesUpdate.isDrawingCacheEnabled =true
-        binding.img1GamesUpdate.buildDrawingCache()
-        val bitmap = (binding.img1GamesUpdate.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos)
-        val data = baos.toByteArray()
-        var uploadTask = imageRoute.putBytes(data)
-        if(imgCount == 2){
-            uploadTask.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(listOfImages)
-                }
-            }
-        }
-
-        if (imgCount==3){
-            val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
-            binding.img2GamesUpdate.isDrawingCacheEnabled =true
+        if (deletedImages) {
+            val listOfImages = mutableListOf<String>()
+            //****************************Imagen 1 ***********************//
+            val storageRef = storage.reference
+            val imageRoute =
+                storageRef.child("${auth.currentUser?.email}/games/$id/images/img_1.jpeg")
+            binding.img1GamesUpdate.isDrawingCacheEnabled = true
+            binding.img1GamesUpdate.buildDrawingCache()
+            val bitmap = (binding.img1GamesUpdate.drawable as BitmapDrawable).bitmap
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+            val data = baos.toByteArray()
+            //****************************Imagen 2 ***********************//
+            val imageRoute2 =
+                storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
+            binding.img2GamesUpdate.isDrawingCacheEnabled = true
             binding.img2GamesUpdate.buildDrawingCache()
             val bitmap2 = (binding.img2GamesUpdate.drawable as BitmapDrawable).bitmap
             val baos2 = ByteArrayOutputStream()
-            bitmap2.compress(Bitmap.CompressFormat.JPEG,50,baos2)
+            bitmap2.compress(Bitmap.CompressFormat.JPEG, 50, baos2)
             val data2 = baos2.toByteArray()
-
-            uploadTask.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
-                }
-            }
-
-            var uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(listOfImages)
-                }
-            }
-        }
-        if (imgCount==4){
-            val imageRoute2 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_2.jpeg")
-            binding.img2GamesUpdate.isDrawingCacheEnabled =true
-            binding.img2GamesUpdate.buildDrawingCache()
-            val bitmap2 = (binding.img2GamesUpdate.drawable as BitmapDrawable).bitmap
-            val baos2 = ByteArrayOutputStream()
-            bitmap2.compress(Bitmap.CompressFormat.JPEG,50,baos2)
-            val data2 = baos2.toByteArray()
-
-            val imageRoute3 = storageRef.child("${auth.currentUser?.email}/games/$id/images/img_3.jpeg")
-            binding.img3GamesUpdate.isDrawingCacheEnabled =true
+            //****************************Imagen 3 ***********************//
+            val imageRoute3 =
+                storageRef.child("${auth.currentUser?.email}/games/$id/images/img_3.jpeg")
+            binding.img3GamesUpdate.isDrawingCacheEnabled = true
             binding.img3GamesUpdate.buildDrawingCache()
             val bitmap3 = (binding.img3GamesUpdate.drawable as BitmapDrawable).bitmap
             val baos3 = ByteArrayOutputStream()
-            bitmap3.compress(Bitmap.CompressFormat.JPEG,50,baos3)
+            bitmap3.compress(Bitmap.CompressFormat.JPEG, 50, baos3)
             val data3 = baos3.toByteArray()
-
-            uploadTask.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
+            //************************* Casos de actualizacion****************//
+            if (!firstImgFree) {
+                if (!secondImgFree) {
+                    if (!thirdImgFree) {
+                        val uploadTask = imageRoute.putBytes(data)
+                        uploadTask.addOnSuccessListener {
+                            imageRoute.downloadUrl.addOnSuccessListener {
+                                listOfImages.add(it.toString())
+                                val uploadTask2 = imageRoute2.putBytes(data2)
+                                uploadTask2.addOnSuccessListener {
+                                    imageRoute2.downloadUrl.addOnSuccessListener {
+                                        listOfImages.add(it.toString())
+                                        val uploadTask3 = imageRoute3.putBytes(data3)
+                                        uploadTask3.addOnSuccessListener {
+                                            imageRoute3.downloadUrl.addOnSuccessListener {
+                                                listOfImages.add(it.toString())
+                                                uploadGame(listOfImages)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //caso(1,1,1)
+                    } else {
+                        val uploadTask = imageRoute.putBytes(data)
+                        uploadTask.addOnSuccessListener {
+                            imageRoute.downloadUrl.addOnSuccessListener {
+                                listOfImages.add(it.toString())
+                                var uploadTask2 = imageRoute2.putBytes(data2)
+                                uploadTask2.addOnSuccessListener {
+                                    imageRoute2.downloadUrl.addOnSuccessListener {
+                                        listOfImages.add(it.toString())
+                                        uploadGame(listOfImages)
+                                    }
+                                }
+                            }
+                        }
+                        //caso(1,1,0)
+                    }
+                } else if (!thirdImgFree) {
+                    val uploadTask = imageRoute.putBytes(data)
+                    uploadTask.addOnFailureListener {
+                    }.addOnSuccessListener {
+                        imageRoute.downloadUrl.addOnSuccessListener {
+                            listOfImages.add(it.toString())
+                            val uploadTask3 = imageRoute3.putBytes(data3)
+                            uploadTask3.addOnSuccessListener {
+                                imageRoute3.downloadUrl.addOnSuccessListener {
+                                    listOfImages.add(it.toString())
+                                    uploadGame(listOfImages)
+                                }
+                            }
+                        }
+                    }
+                    //caso(1,0,1)
+                } else {
+                    val uploadTask = imageRoute.putBytes(data)
+                    uploadTask.addOnSuccessListener {
+                        imageRoute.downloadUrl.addOnSuccessListener {
+                            listOfImages.add(it.toString())
+                            uploadGame(listOfImages)
+                        }
+                    }
+                    //caso(1,0,0)
                 }
             }
-
-            val uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
+            else if (!secondImgFree) {
+                if (!thirdImgFree) {
+                    val uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            listOfImages.add(it.toString())
+                            val uploadTask3 = imageRoute3.putBytes(data3)
+                            uploadTask3.addOnSuccessListener {
+                                imageRoute3.downloadUrl.addOnSuccessListener {
+                                    listOfImages.add(it.toString())
+                                    uploadGame(listOfImages)
+                                }
+                            }
+                        }
+                    }
+                    //caso(0,1,1)
+                } else {
+                    val uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            listOfImages.add(it.toString())
+                            uploadGame(listOfImages)
+                        }
+                    }
+                    //caso(0,1,0)
                 }
-            }
-            val uploadTask3 = imageRoute3.putBytes(data3)
-            uploadTask3.addOnFailureListener{
 
-            }.addOnSuccessListener {
-                imageRoute3.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(ContentValues.TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(listOfImages)
+            } else if (!thirdImgFree) {
+                val uploadTask3 = imageRoute3.putBytes(data3)
+                uploadTask3.addOnSuccessListener {
+                    imageRoute3.downloadUrl.addOnSuccessListener {
+                        listOfImages.add(it.toString())
+                        uploadGame(listOfImages)
+                    }
                 }
+                //(caso 0, 0, 1)
             }
-        }
-
-
-
+    }else{
+            uploadGame(list)
     }
-
+}
     private fun uploadGame(images:List<String>){
         try{
             val gameMap = mapOf(
@@ -445,6 +567,7 @@ class GameUpdateFragment:Fragment() {
             auth.currentUser?.email?.let {
                 db.collection("users").document(it).collection("Games").document(args.gameInfo.id).update(gameMap)
                     .addOnSuccessListener { documentReference ->
+                        updateExchange(images)
                         progressDialog.dismiss()
                         Log.d(ContentValues.TAG, "successful")
                         Toast.makeText(context,"Se Actualizo el juego", Toast.LENGTH_SHORT).show()
@@ -462,6 +585,49 @@ class GameUpdateFragment:Fragment() {
             Toast.makeText(context,"Datos incompletos, porfavor llenar", Toast.LENGTH_SHORT).show()
         }
 
+    }
+    private fun updateExchange(images:List<String>) {
+        db.collection("exchange")
+            .whereEqualTo("gameid", args.gameInfo.id)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    exchangeViewModel.updateGameExchange(
+                        Exchange(
+                            id = document.data["id"] as String,
+                            exchangetype = document.data["exchangetype"] as String,
+                            gameid = document.data["gameid"] as String,
+                            gamename = binding.edtxNameGameUpdate.text.toString(),
+                            gamestate = numericalState,
+                            gamelanguage = binding.edtxLanguageInputUpdate.text.toString(),
+                            gamedescription = binding.edtxDescriptionGameUpdate.text.toString(),
+                            gameplayers = binding.edtxPlayersInputUpdate.text.toString().toInt(),
+                            gametime = binding.edtxTimeInputUpdate.text.toString(),
+                            gameprice = binding.edtxPriceInputUpdate.text.toString().toDouble(),
+                            gamelocation = binding.edtxLocationInputUpdate.text.toString(),
+                            gameimages = images,
+                            profileid = prefs.getId(),
+                            profilenames = prefs.getName(),
+                            profilelastnames = prefs.getLastNames(),
+                            profileemail = prefs.getEmail(),
+                            profileimage = prefs.getImage(),
+                            stars = prefs.getStars().toDouble(),
+                        )
+                    )
+                }
+            }
+        exchangeViewModel.updateGameEx.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                }
+                is UiState.Failure -> {
+                    toast(state.error)
+                }
+                is UiState.Success -> {
+
+                }
+            }
+        }
     }
 
 }

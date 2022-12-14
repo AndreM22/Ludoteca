@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeftExchange"
@@ -52,6 +52,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.97" />
+
+    <CheckBox
+        android:id="@+id/cbOnlyExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toBottomOf="@id/btSearchGameExchange"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeftExchange"
+        android:text="Solo Intercambio"/>
+    <CheckBox
+        android:id="@+id/cbOnlySale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Solo Venta"
+        app:layout_constraintTop_toBottomOf="@id/btSearchGameExchange"
+        app:layout_constraintStart_toEndOf="@id/cbOnlyExchange"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRightExchange"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExchangeList"
@@ -85,6 +104,17 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeftExchange"
         app:layout_constraintTop_toBottomOf="@+id/rvExchangeList"
         app:srcCompat="@drawable/button_background_2" />
+
+    <ProgressBar
+        android:id="@+id/progressBarExchangeMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

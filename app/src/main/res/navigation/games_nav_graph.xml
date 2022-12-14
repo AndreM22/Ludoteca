@@ -109,5 +109,20 @@
         <action
             android:id="@+id/action_exchangeMainFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_exchangeMainFragment_to_exchangeDetails"
+            app:destination="@id/exchangeDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/exchangeDetails"
+        android:name="com.andremachicao.ludoteca.exchange.ExchangeDetails"
+        android:label="ExchangeDetails"
+        tools:layout="@layout/fragment_exchange_game_details">
+        <argument
+            android:name="detailsEx"
+            app:argType="com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange" />
+        <action
+            android:id="@+id/action_exchangeDetails_to_exchangeMainFragment"
+            app:destination="@id/exchangeMainFragment" />
     </fragment>
 </navigation>

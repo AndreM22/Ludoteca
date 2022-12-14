@@ -5,7 +5,7 @@
     <data>
         <variable
             name="exchangeInfo"
-            type="com.andremachicao.ludoteca.exchange.Exchange" />
+            type="com.andremachicao.ludoteca.firebase_MVVM.data.exchange.model.Exchange" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,15 +70,16 @@
                 android:text="@{String.valueOf(exchangeInfo.gameprice)}"
                 app:layout_constraintEnd_toStartOf="@id/bsInfoExchangeItem"
                 app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange"
-                tools:text="100.00" />
+                tools:text="100000.00" />
 
             <ImageView
                 android:id="@+id/idIcPriceItemExchange"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toStartOf="@+id/idPriceItemExchange"
+                app:layout_constraintStart_toEndOf="@+id/stateLabelItemExchange"
                 app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange"
                 app:srcCompat="@drawable/ic_exchange" />
 
@@ -117,30 +118,64 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/idNameGameItemExchange" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgUserExchangeItem"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="15dp"
-                srcUrl="@{exchangeInfo.profileimage}"
-                app:srcCompat="@drawable/user"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornersSize"
-
-            app:layout_constraintTop_toBottomOf="@id/idIcLocationItemExchange"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:text="@{exchangeInfo.profilenames}"
-                tools:text="Manuel Alejandro Valenzuela Delgadillo"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/imgUserExchangeItem"
-                app:layout_constraintTop_toBottomOf="@+id/idIcLocationItemExchange" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/idIcLocationItemExchange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/button_gallery">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgUserExchangeItem"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    srcUrl="@{exchangeInfo.profileimage}"
+                    app:srcCompat="@drawable/user"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornersSize"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/txNameUserItemExchange"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="18dp"
+
+                    android:background="@color/light_red"
+                    tools:text="Manuel Alejandro Valenzuela Delgadillo"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/imgUserExchangeItem"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"
+                    android:textColor="#fff"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txNameUserItemExchange"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{exchangeInfo.exchangetype}"
+                    tools:text="Solo intercambio"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
