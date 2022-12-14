@@ -328,18 +328,17 @@ class AddGameFragment: Fragment(){
                     Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                }
-            }
+                    var uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnFailureListener{
 
-            var uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(id,listOfImages)
+                    }.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            Log.v("STORAGE", "-------->>>$it")
+                            listOfImages.add(it.toString())
+                            Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                            uploadGame(id,listOfImages)
+                        }
+                    }
                 }
             }
         }
@@ -367,34 +366,31 @@ class AddGameFragment: Fragment(){
                     Log.v("STORAGE", "-------->>>$it")
                     listOfImages.add(it.toString())
                     Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                    val uploadTask2 = imageRoute2.putBytes(data2)
+                    uploadTask2.addOnFailureListener{
+
+                    }.addOnSuccessListener {
+                        imageRoute2.downloadUrl.addOnSuccessListener {
+                            Log.v("STORAGE", "-------->>>$it")
+                            listOfImages.add(it.toString())
+                            Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                            val uploadTask3 = imageRoute3.putBytes(data3)
+                            uploadTask3.addOnFailureListener{
+
+                            }.addOnSuccessListener {
+                                imageRoute3.downloadUrl.addOnSuccessListener {
+                                    Log.v("STORAGE", "-------->>>$it")
+                                    listOfImages.add(it.toString())
+                                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
+                                    uploadGame(id,listOfImages)
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            val uploadTask2 = imageRoute2.putBytes(data2)
-            uploadTask2.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute2.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                }
-            }
-            val uploadTask3 = imageRoute3.putBytes(data3)
-            uploadTask3.addOnFailureListener{
-
-            }.addOnSuccessListener {
-                imageRoute3.downloadUrl.addOnSuccessListener {
-                    Log.v("STORAGE", "-------->>>$it")
-                    listOfImages.add(it.toString())
-                    Log.d(TAG,"El tamanio de lista es: ${listOfImages.size}")
-                    uploadGame(id,listOfImages)
-                }
-            }
         }
-
-
-
     }
     private fun uploadGame(id:String,images:List<String>){
         try{

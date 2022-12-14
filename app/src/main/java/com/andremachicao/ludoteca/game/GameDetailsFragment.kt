@@ -97,7 +97,6 @@ class GameDetailsFragment : Fragment() {
         binding.carousel.addData(list)
 
         binding.btUpdateGame.setOnClickListener {
-            Toast.makeText(context,"Entro al on click del update",Toast.LENGTH_SHORT).show()
             val goToUpdatePage = GameDetailsFragmentDirections.actionGameDetailsFragmentToGameUpdateFragment(args.gameInfo)
             findNavController().navigate(goToUpdatePage)
         }
